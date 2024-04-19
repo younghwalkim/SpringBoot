@@ -7,7 +7,7 @@
 
 ---
 
-dependencies { >
+dependencies {
 
 	// 추가 - jsp 사용을 위한 라이브러리 의존성 추가
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
