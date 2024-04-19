@@ -6,25 +6,25 @@
 + 오라클 <Br>
 
 ---
+<Br>
+dependencies {  <Br>
+	// 추가 - jsp 사용을 위한 라이브러리 의존성 추가    <Br>
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'  <Br>
+	compileOnly 'javax.servlet:servlet-api:2.5'  <Br>
+	compileOnly 'javax.servlet.jsp:jsp-api:2.2.1-b03'  <Br>
+	implementation 'jakarta.servlet:jakarta.servlet-api'  <Br>
+	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'  <Br>
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'  <Br><Br>
 
-dependencies {
-	//jsp 사용을 위한 라이브러리 의존성 추가
-	//implementation 'javax.servlet:jstl:1.2'
-	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-	compileOnly 'javax.servlet:servlet-api:2.5'
-	compileOnly 'javax.servlet.jsp:jsp-api:2.2.1-b03'
-	implementation 'jakarta.servlet:jakarta.servlet-api'
-	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
-	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+	// 추가 - 오라클 DB 와 Mybatis 사용 설정<Br>
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.2.4'<Br>
+	implementation 'com.oracle.database.jdbc:ojdbc8:18.3.0.0'<Br>
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'<Br><Br>
 
-	//오라클 DB 와 Mybatis 사용 설정
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.2.4'
-	implementation 'com.oracle.database.jdbc:ojdbc8:18.3.0.0'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// 프로젝트 생성시 기본제공 및 선택 <Br>
+	implementation 'org.springframework.boot:spring-boot-starter-web'<Br>
+	compileOnly 'org.projectlombok:lombok'<Br>
+	annotationProcessor 'org.projectlombok:lombok'<Br>
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'<Br>
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'<Br>
 }
