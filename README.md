@@ -8,6 +8,7 @@
 ---
 <Br>
 dependencies {  <Br>
+
 	// 추가 - jsp 사용을 위한 라이브러리 의존성 추가    <Br>
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'  <Br>
 	compileOnly 'javax.servlet:servlet-api:2.5'  <Br>
@@ -27,4 +28,5 @@ dependencies {  <Br>
 	annotationProcessor 'org.projectlombok:lombok'<Br>
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'<Br>
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'<Br>
+	
 }
