@@ -29,7 +29,7 @@ public class BoardController {
 	
 	@Autowired
 	private final BoardService service;
-	
+
 	// 등록 처리용 메소드
 	@PostMapping
 	public ModelAndView boardInsert(
@@ -56,7 +56,21 @@ public class BoardController {
 		mv.setViewName("board/boardDetailView");
 		return mv;
 	}
-	
+
+	// 수정Form 조회 처리용 메소드
+	@GetMapping("/{bno}")
+	public ModelAndView boardUpdateForm(
+			@PathVariable("bno") int boardNum,
+			ModelAndView mv) {
+
+		// 데이터 조회
+		Board board = service.read(boardNum);
+
+		mv.addObject("board", board);
+		mv.setViewName("board/boardUpdateForm");
+		return mv;
+	}
+
 	// 수정 처리용 메소드
 	@PutMapping("/{bno}")   //ajax 통신
 	public ResponseEntity<Void> boardUpdate(
