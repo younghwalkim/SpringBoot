@@ -19,6 +19,7 @@
 	</div>
 	<h2>${ name }</h2>
 
+	인기글 top 3
 
 </body>
 </html>
