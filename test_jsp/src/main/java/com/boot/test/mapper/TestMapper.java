@@ -13,4 +13,6 @@ public interface TestMapper {  // mapper.xml 의 namespace 로 등록함
 	public void updateBoard(Board board);
 	public void deleteBoard(int boardNum);
 	public Board selectBoard(int boardNum);
+
+	List<Board> selectTop3();
 }

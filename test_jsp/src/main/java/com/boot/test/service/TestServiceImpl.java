@@ -15,8 +15,13 @@ public class TestServiceImpl implements TestService {
 	private TestMapper testMapper;
 	
 	@Override
-	public List<Board> selectList() {		
+	public List<Board> selectList() {
 		return testMapper.selectBoardList();
+	}
+
+	@Override
+	public List<Board> selectTop3() {
+		return testMapper.selectTop3();
 	}
 
 }

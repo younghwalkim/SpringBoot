@@ -8,4 +8,5 @@ public class Board {
 	private String boardWriter;
 	private String boardTitle;
 	private String boardContent;
+	private int boardReadCount;
 }
