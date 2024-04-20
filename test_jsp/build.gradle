@@ -23,8 +23,7 @@ repositories {
 }
 
 dependencies {
-	tjf//추가 -  jsp 사용을 위한 라이브러리 의존성 추가
-	//implementation 'javax.servlet:jstl:1.2'
+	//추가 -  jsp 사용을 위한 라이브러리 의존성 추가
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	compileOnly 'javax.servlet:servlet-api:2.5'
 	compileOnly 'javax.servlet.jsp:jsp-api:2.2.1-b03'
@@ -36,6 +35,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.2.4'
 	implementation 'com.oracle.database.jdbc:ojdbc8:18.3.0.0'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// 추가 - json
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'net.sf.json-lib:json-lib-ext-spring:1.0.2'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
 
 	// 프로젝트 생성시 선택
 	implementation 'org.springframework.boot:spring-boot-starter-web'

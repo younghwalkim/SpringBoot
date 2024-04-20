@@ -27,11 +27,11 @@
 		<result property="boardContent" column="BOARD_CONTENT" />				
 	</resultMap>
 	
-	<!-- <resultMap id="resultBoardTop3" type="Board">
+	<resultMap id="resultBoardTop3" type="Board">
 		<result property="boardNum" column="BOARD_NUM" />
 		<result property="boardTitle" column="BOARD_TITLE" />
 		<result property="boardReadCount" column="BOARD_READCOUNT" />
-	</resultMap> -->
+	</resultMap>
 	
 	<!-- 
 		비교연산자를 쿼리문에 사용하면
@@ -39,7 +39,7 @@
 		이 문제를 방지하기 위해 xml 코드 중 xml parser 에 의해 해석하지 말고,
 		문장 그대로 해석하라는 뜻으로 <![CDATA[ 쿼리문장 ]]> 사용함
 	 -->
-	<!-- <select id="selectTop3" resultMap="resultBoardTop3">
+	 <select id="selectTop3" resultMap="resultBoardTop3">
 		<![CDATA[
 		select * 
 		from (select rownum rnum, board_num, board_title, board_readcount 
@@ -48,7 +48,7 @@
 				  order by board_readcount desc)) 
 		where rnum <= 3
 		]]>
-	</select> -->
+	</select>
 	
 	<!-- <select id="selectListCount" resultType="_int">
 		select count(*) from board
