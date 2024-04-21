@@ -22,6 +22,11 @@ dependencies {  <Br>
 	implementation 'com.oracle.database.jdbc:ojdbc8:18.3.0.0'<Br>
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'<Br><Br>
 
+	// 추가 - json
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'net.sf.json-lib:json-lib-ext-spring:1.0.2'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
+
 	// 프로젝트 생성시 기본제공 및 선택 <Br>
 	implementation 'org.springframework.boot:spring-boot-starter-web'<Br>
 	compileOnly 'org.projectlombok:lombok'<Br>
