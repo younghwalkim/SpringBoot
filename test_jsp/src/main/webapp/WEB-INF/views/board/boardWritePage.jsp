@@ -11,6 +11,7 @@
 <body>
 
 <c:import url="/menubar" />
+<hr>
 
 	<h2>board : 게시글 등록 페이지</h2>
 	<form action="/boards" method="post">
@@ -19,6 +20,10 @@
 		내 용 : <textarea name="boardContent" cols="50" rows="5"></textarea>
 		<input type="submit" value="게시글등록">
 	</form>
+
+
+<hr style="clear:both;">
+<c:import url="/footer" />
 
 </body>
 </html>

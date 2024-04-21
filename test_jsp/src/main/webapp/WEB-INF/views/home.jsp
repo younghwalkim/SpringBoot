@@ -51,6 +51,7 @@ $(function(){
 <body>
 
 <c:import url="/menubar" />
+<hr>
 
 	<h1>Test Spring Boot with JSP</h1>
 	<div>
@@ -65,6 +66,9 @@ $(function(){
 			<tr><th>번호</th><th>제목</th><th>조회수</th></tr>
 		</table>
 	</div>
+
+<hr style="clear:both;">
+<c:import url="/footer" />
 
 </body>
 </html>
