@@ -33,14 +33,22 @@ public class TestController {
 		return mv;
 	}
 
-	// 상단 메뉴
+	// 상단 공통 메뉴 영역
 	@GetMapping("/menubar")
-	public String welcome() {
+	public String menubar() {
 		String str = "Welcome! Spring Boot Project with JSP <br>";
 		str += "[ <a href='/home'>Home</a> | ";
-		str += "<a href='/member'>member</a> | ";
-		str += "<a href='/board'>board</a> ] ";
+		str += "<a href='/board'>board</a> | ";
+		str += "<a href='/member'>member</a> ] ";
 
+		return str;
+	}
+
+	// 하단 공통 영역
+	@GetMapping("/footer")
+	public String footer() {
+		String str = "<center>Welcome! Spring Boot Project with JSP</center>";
+		
 		return str;
 	}
 

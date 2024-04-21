@@ -12,6 +12,7 @@
 <body>
 
 <c:import url="/menubar" />
+<hr>
 
 	<h1>Test Spring Boot with JSP</h1>
 	<div>
@@ -37,5 +38,10 @@
 			</tr>
 		</c:forEach>
 	</table>
+
+
+<hr style="clear:both;">
+<c:import url="/footer" />
+
 </body>
 </html>
