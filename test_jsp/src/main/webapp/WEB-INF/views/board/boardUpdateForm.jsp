@@ -7,28 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <title>detailView</title>
-<style>
+	<style>
+		table, th, td {
+			border: 1px solid #ddd;
+		}
 
-	table, th, td {
-		border: 1px solid #ddd;
-	}
+		table {
+			width:600px;
+			border-collapse: collapse;
+		}
 
-	table {
-		width:600px;
-		border-collapse: collapse;
-	}
+		th, td {
+			padding: 8px;
+			text-align: center;
+			border-bottom: 1px solid #ddd;
+		}
 
-	th, td {
-		padding: 8px;
-		text-align: center;
-		border-bottom: 1px solid #ddd;
-	}
-
-	th {
-		background-color: #f2f2f2;
-	}
-
-</style>
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
 <script type="text/javascript" src="/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -70,7 +68,7 @@ $(function(){
 	  <form> <!-- form 의 전송방식은 GET | POST 만 가능함 -->        
 		<input type="hidden" name="boardNum" value="${ board.boardNum }">
 		<table>
-			<tr><td>글제목</td>
+			<tr><td style="width:100px;">글제목</td>
 				<td style="text-align:left;"><input type="text" name="boardTitle" size="50" value="${ board.boardTitle }"></td>
 			</tr>
 			<tr><td>작성자</td>
@@ -81,7 +79,7 @@ $(function(){
 			</tr>
 			<tr><td colspan="2">
 				<input type="button" id="modifyBtn" value="게시글수정">
-				<input type="reset" value="수정취소"></td>
+				<input type="reset" value="작성내용 지우기"></td>
 			</tr>
 		</table>
 	</form>

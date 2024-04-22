@@ -7,6 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <title>detailView</title>
+	<style>
+		table, th, td {
+			border: 1px solid #ddd;
+		}
+
+		table {
+			width:600px;
+			border-collapse: collapse;
+		}
+
+		th, td {
+			padding: 8px;
+			text-align: center;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
 <script type="text/javascript" src="resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -49,15 +69,22 @@ $(function(){
 <c:import url="/menubar" />
 <hr>
 
-	<h2>${ board.boardNum } 번 게시글 내용 보기 및 수정 페이지</h2>
-		글제목 : ${ board.boardTitle } <br>
-		작성자 : ${ board.boardWriter } <br>
-		내 용 :  ${ board.boardContent } <br>
-	<br>
-	<button id="modifyBtn">수정하기</button>
-	<button id="deleteBtn">삭제하기</button>
-
-
+	<h2>${ board.boardNum }번 게시글 내용 보기</h2>
+	<table>
+		<tr><td style="width:100px;">글제목</td>
+			<td style="text-align:left;">${ board.boardTitle }</td>
+		</tr>
+		<tr><td>작성자</td>
+			<td style="text-align:left;">${ board.boardWriter }</td>
+		</tr>
+		<tr><td style="text-align:left;" colspan="2">${ board.boardContent }</td>
+		</tr>
+		<tr><td colspan="2">
+			<button id="modifyBtn">수정하기</button>
+			<button id="deleteBtn">삭제하기</button>
+			<button onclick="javascript:location.href='/board';">목록</button></td>
+		</tr>
+	</table>
 
 <hr style="clear:both;">
 <c:import url="/footer" />
