@@ -1,4 +1,4 @@
-package com.boot.test.service;
+package com.boot.test.main.service;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.boot.test.dto.Board;
-import com.boot.test.mapper.TestMapper;
+import com.boot.test.main.mapper.TestMapper;
 
 @Service
 public class TestServiceImpl implements TestService {

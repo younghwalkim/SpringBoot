@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.boot.test.mapper.TestMapper">
+<mapper namespace="com.boot.test.main.mapper.TestMapper">
 <!-- namespace 는 @Mapper 로 등록된 인터페이스 클래스명이어야 함 -->
 
 	<!-- <resultMap type="Board" id="resultList">

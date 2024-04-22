@@ -1,4 +1,4 @@
-package com.boot.test.controller;
+package com.boot.test.main.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.test.dto.Board;
-import com.boot.test.service.TestService;
+import com.boot.test.main.service.TestService;
 
 
 @RestController
@@ -39,7 +39,7 @@ public class TestController {
 		String str = "Welcome! Spring Boot Project with JSP <br>";
 		str += "[ <a href='/home'>Home</a> | ";
 		str += "<a href='/board'>board</a> | ";
-		str += "<a href='/member'>member</a> ] ";
+		str += "<a href='/contract'>member</a> ] ";
 
 		return str;
 	}
@@ -104,6 +104,20 @@ public class TestController {
 	@GetMapping("/movepage")
 	public ModelAndView moveBoardPage(ModelAndView mv) {
 		mv.setViewName("board/boardWritePage");
+		return mv;
+	}
+
+	// 이용약관
+	@GetMapping("/contract")
+	public ModelAndView contract(ModelAndView mv) {
+		mv.setViewName("member/contract");
+		return mv;
+	}
+
+	// 등록양식
+	@GetMapping("/registerPage")
+	public ModelAndView registerPage(ModelAndView mv) {
+		mv.setViewName("member/register");
 		return mv;
 	}
 }

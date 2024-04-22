@@ -1,4 +1,4 @@
-package com.boot.test.mapper;
+package com.boot.test.main.mapper;
 
 import java.util.List;
 

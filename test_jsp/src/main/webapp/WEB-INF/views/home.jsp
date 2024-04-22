@@ -7,6 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <title>test_jsp</title>
+	<style>
+		table, th, td {
+			border: 1px solid #ddd;
+		}
+
+		table {
+			width:600px;
+			border-collapse: collapse;
+		}
+
+		th, td {
+			padding: 8px;
+			text-align: center;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function(){

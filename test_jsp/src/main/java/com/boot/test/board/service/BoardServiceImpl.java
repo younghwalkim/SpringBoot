@@ -3,7 +3,7 @@ package com.boot.test.board.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.boot.test.mapper.TestMapper;
+import com.boot.test.main.mapper.TestMapper;
 import com.boot.test.dto.Board;
 
 import lombok.RequiredArgsConstructor;
