@@ -2,7 +2,7 @@
 + Spring Boot, restfull api, jpa 적용 <Br>
 + 라이브러리
 	+ Lombok - 코드 다이어트
-	+ websocket - 채칭
+	+ websocket - 1:1 채팅
    
 + 오라클 <Br>
 
