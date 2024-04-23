@@ -1,4 +1,4 @@
-+ 개발 Tools - STS4, 인텔리제이 <Br>
++ STS4, 인텔리제이 <Br>
 + Spring Boot, restfull api, jpa 적용 <Br>
 + 라이브러리
 	+ Lombok - 코드 다이어트
