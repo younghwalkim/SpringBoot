@@ -1,7 +1,9 @@
 + 개발 Tools - STS4, 인텔리제이 <Br>
 + Spring Boot, restfull api, jpa 적용 <Br>
 + 라이브러리
-	+ [java] Lombok - 코드 다이어트 (라이브러리로 반복되는 getter, setter, toString .. 등의 반복 메서드 작성 코드를 줄임)
+	+ Lombok - 코드 다이어트
+	+ websocket - 채칭
+   
 + 오라클 <Br>
 
 ---
