@@ -39,6 +39,8 @@ public class TestController {
 		String str = "Welcome! Spring Boot Project with JSP <br>";
 		str += "[ <a href='/home'>Home</a> | ";
 		str += "<a href='/board'>board</a> | ";
+		str += "<a href='/chat'>chat request</a> | ";
+		str += "<a href='/enterChat'>chat response</a> | ";
 		str += "<a href='/contract'>member</a> ] ";
 
 		return str;
@@ -104,6 +106,22 @@ public class TestController {
 	@GetMapping("/movepage")
 	public ModelAndView moveBoardPage(ModelAndView mv) {
 		mv.setViewName("board/boardWritePage");
+		return mv;
+	}
+
+	// chat 요청
+	@GetMapping("/chat")
+	public ModelAndView chat(ModelAndView mv) {
+
+		mv.setViewName("chatting/unicast");
+		return mv;
+	}
+
+	// chat 응답
+	@GetMapping("/enterChat")
+	public ModelAndView enterChat(ModelAndView mv) {
+
+		mv.setViewName("chatting/unicast2");
 		return mv;
 	}
 
