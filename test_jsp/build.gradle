@@ -41,6 +41,10 @@ dependencies {
 	implementation 'net.sf.json-lib:json-lib-ext-spring:1.0.2'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
 
+	// 추가 - spring-websocket
+	implementation 'org.springframework:spring-websocket:5.3.18'
+	compileOnly 'javax.websocket:javax.websocket-api:1.1'
+
 	// 프로젝트 생성시 선택
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
