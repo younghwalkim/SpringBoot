@@ -78,7 +78,7 @@
                     for(var i in json){
                         values += "<tr>"
                             + "<td>" + json[i].boardNum + "</td>"
-                            + "<td><a href='/boards/" + json[i].boardNum + "'>" + json[i].boardTitle + "</a></td>"
+                            + "<td style='text-align:left;'><a href='/boardView/" + json[i].boardNum + "'>" + json[i].boardTitle + "</a></td>"
                             + "<td>" + json[i].boardWriter + "</td>"
                             + "</tr>";
                     }
@@ -95,7 +95,7 @@
 </head>
 <body>
 
-[<a href="/">Home</a> | <a href="/boardList">board List</a> | <a href="/boardWriteForm">board Form</a> ]
+[<a href="/">Home</a> | <a href="/boardList">board List</a> ]
 
 <hr>
 <h1>Board List</h1>

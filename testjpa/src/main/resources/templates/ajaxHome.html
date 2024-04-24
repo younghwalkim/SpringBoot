@@ -23,7 +23,7 @@
         }
 
         td {
-            text-align: left;
+            text-align: center;
         }
 
         div#listarea{
@@ -64,7 +64,7 @@
                         }
                         values += "<tr>"
                             + "<td>" + json[i].boardNum + "</td>"
-                            + "<td><a id='read_"+ json[i].boardNum +"'>" + json[i].boardTitle + "</a></td>"
+                            + "<td style='text-align:left;'><a id='read_"+ json[i].boardNum +"'>" + json[i].boardTitle + "</a></td>"
                             + "<td>" + json[i].boardWriter + "</td>"
                             + "</tr>";
                         count++;
@@ -204,7 +204,7 @@
 </head>
 <body>
 
-[<a href="/">Home</a> | <a href="/boardList">board List</a> | <a href="/boardWriteForm">board Form</a> ]
+[<a href="/">Home</a> | <a href="/boardList">board List</a> ]
 
 <hr>
     <h1>Spring Boot JPA Test</h1>
@@ -218,28 +218,6 @@
                 <th>제목</th>
                 <th>작성자</th>
             </tr>
-        </table>
-    </div>
-
-    <hr style="clear: both">
-
-    <div id="inputarea" style="border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
-        <h4>게시글 등록</h4>
-        <table>
-            <tr><th><label for="bnum"> 번호 </label></th>
-                <td><input type="text" name="boardNum" id="bnum" value=""></td></tr>
-            <tr><th><label for="btitle"> 제목 </label></th>
-                <td><input type="text" name="boardTitle" id="btitle" value=""></td></tr>
-            <tr><th><label for="bwriter"> 작성자 </label></th>
-                <td><input type="text" name="boardWriter" id="bwriter" value=""></td></tr>
-            <tr><th><label for="bcontent"> 내용 </label></th>
-                <td><textarea name="boardContent" id="bcontent"></textarea></td></th></tr>
-            <tr><td colspan="4" style="text-align: center;">
-                    <button id="registerBtn">등록</button> &nbsp;
-                    <button id="readBtn">조회</button> &nbsp;
-                    <button id="modifyBtn">수정</button> &nbsp;
-                    <button id="deleteBtn">삭제</button>
-                </td></tr>
         </table>
     </div>
 
