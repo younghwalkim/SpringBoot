@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -26,8 +25,8 @@ public class BoardController {
 
     // 목록
     @GetMapping
-    public ResponseEntity<List<Board>> selectAll(){
-        log.info("selectAll()");
+    public ResponseEntity<List<Board>> selectAllBoard(){
+        log.info("### selectAll()");
 
         /* 목록값 리턴 */
         return new ResponseEntity<>(service.selectList(), HttpStatus.OK);
@@ -35,9 +34,9 @@ public class BoardController {
 
     // 상세조회
     @GetMapping("/{boardNum}")
-    public ResponseEntity<Board> selectOne(
+    public ResponseEntity<Board> selectOneBoard(
             @PathVariable("boardNum") long boardNum){
-        log.info("selectOne()");
+        log.info("### selectOne()");
 
         /* 해당 게시물 DB 조회 */
         Optional<Board> optionalBoard = service.selectBoard(boardNum);
@@ -47,21 +46,22 @@ public class BoardController {
 
     // 등록
     @PostMapping
-    public ResponseEntity<Board> insert(@RequestBody Board board){
-        log.info("insert");
-
+    public ResponseEntity<Board> insertBoard(@RequestBody Board board){
+        log.info("### insert");
         /* 등록일자 담기 */
         board.setBoardDate((new Date(Calendar.getInstance().getTimeInMillis())));
         /* 등록처리 */
         service.insertBoard(board);
-        /* board 값 리턴 */
+        /* 리턴 */
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
 
     // 수정
-    @PutMapping
-    public ResponseEntity<Board> update(@RequestBody Board board){
-        log.info("update");
+    @PutMapping("/{boardNum}")
+    public ResponseEntity<Board> updateBoard(
+            @PathVariable("boardNum") long boardNum,
+            @RequestBody Board board){
+        log.info("### update");
         
         /* 수정일자 담기 */
         board.setBoardDate((new Date(Calendar.getInstance().getTimeInMillis())));
@@ -73,8 +73,8 @@ public class BoardController {
 
     // 삭제
     @DeleteMapping("/{boardNum}")
-    public ResponseEntity<Void> delete(@PathVariable("boardNum") long boardnum){
-        log.info("delete");
+    public ResponseEntity<Void> deleteBoard(@PathVariable("boardNum") long boardnum){
+        log.info("### delete");
 
         /* 삭제처리 */        
         service.deleteBoard(boardnum);

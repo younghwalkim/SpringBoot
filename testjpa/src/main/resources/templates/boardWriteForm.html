@@ -1,0 +1,106 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width:600px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td {
+            text-align: left;
+        }
+
+        div#listarea{
+            float:left;
+        }
+        div#inputarea{
+            width: 400px;
+            height: 300px;
+            border: 1px solid darkred;
+            margin-left: 400px;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // 등록버튼 클릭시
+            $('#registerBtn').on('click', function () {
+                // input 태그 접근
+                var inputBtitle = $('#btitle');
+                var inputBwriter = $('#bwriter');
+                var inputBcontent = $('#bcontent');
+
+                // 각 태그에 기록된 값 추철
+                var titleVal = inputBtitle.val();
+                var writerVal = inputBwriter.val();
+                var contentVal = inputBcontent.val();
+
+                // 서버로 전송할 json 객체 생성 - 객체이름과 동일할 것
+                var BoardObject = {
+                    boardTitle:titleVal,
+                    boardWriter:writerVal,
+                    boardContent:contentVal
+                }
+
+                // ajax 전송
+                $.ajax({
+                    url: "/boards",
+                    type: "POST",
+                    data: JSON.stringify(BoardObject),
+                    contentType:"application/json; charset=UTF-8",
+                    success: function(){
+                        alert("Insert ok");
+                        // 페이지 새로고침 강제 처리
+                       location.href='/boardList';
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                    }
+                });  //ajax 전송
+            });
+        });
+    </script>
+</head>
+<body>
+
+[<a href="/">Home</a> | <a href="/boardList">board List</a> | <a href="/boardWriteForm">board Form</a> ]
+
+<hr>
+    <h1>Board WriteForm</h1>
+    <hr>
+
+    <div id="inputarea" style="border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>게시글 등록</h4>
+        <table>
+            <tr><th><label for="btitle"> 제목 </label></th>
+                <td><input type="text" name="boardTitle" id="btitle" value=""></td></tr>
+            <tr><th><label for="bwriter"> 작성자 </label></th>
+                <td><input type="text" name="boardWriter" id="bwriter" value=""></td></tr>
+            <tr><th><label for="bcontent"> 내용 </label></th>
+                <td><textarea name="boardContent" id="bcontent"></textarea></td></th></tr>
+            <tr><td colspan="4" style="text-align: center;">
+                    <button id="registerBtn">등록</button> &nbsp;
+                    <button type="reset">수정</button> &nbsp;
+                </td></tr>
+        </table>
+    </div>
+
+</body>
+</html>
