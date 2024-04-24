@@ -12,7 +12,7 @@ import java.sql.Date;
 @SequenceGenerator(
 		name="board_seq_bnum",
 		sequenceName = "seq_bnum",
-		initialValue = 157,
+		initialValue = 14,	/* board 테이블 정보의 BOARD_NUM 참조할 것 */
 		allocationSize = 1)
 public class Board {
 	@Id	/* board 테이블의 primary key 와 연결 매핑되는 property 에 지정해야 함 (반드시) */

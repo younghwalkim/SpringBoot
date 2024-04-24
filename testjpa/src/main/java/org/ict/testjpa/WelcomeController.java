@@ -10,4 +10,15 @@ public class WelcomeController {
     public String welcome() {
         return "ajaxHome";
     }
+
+    @GetMapping("/boardList")
+    public String boardList() {
+        return "/boardList";
+    }
+
+    @GetMapping("/boardWriteForm")
+    public String boardWriteForm() {
+        return "/boardWriteForm";
+    }
+
 }
