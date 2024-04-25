@@ -129,6 +129,7 @@
 		            <button type="button" id="endBtn">채팅창 나가기</button>
 		        </fieldset>
 		    </div>
+
 		</div>
 	</div>
 </div>

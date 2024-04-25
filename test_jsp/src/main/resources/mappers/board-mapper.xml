@@ -44,8 +44,7 @@
 		select * 
 		from (select rownum rnum, board_num, board_title, board_readcount 
 			 from (select * from board 
-				  where board_lev = 1 
-				  order by board_readcount desc)) 
+				  order by board_readcount desc))
 		where rnum <= 3
 		]]>
 	</select>

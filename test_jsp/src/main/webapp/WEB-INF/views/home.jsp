@@ -32,7 +32,7 @@
 $(function(){
 	//조회수 많은 인기 게시글 상위 3개 조회 출력 처리
 	$.ajax({
-		url: "btop3",
+		url: "/btop3",
 		type: "get",
 		dataType: "json",
 		success: function(data){

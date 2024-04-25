@@ -14,12 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChattingController {
     
 	/*
-    // 1. 채팅 생성 및 대기 페이지 이동
-    @RequestMapping("chattingPage.do")
-    public String chatting() {
-        return "chatting/unicast";
-    }
-
     // 채팅 요청 입력
     @RequestMapping(value="chatRequest.do", method= RequestMethod.POST)
     public void chatRequest(

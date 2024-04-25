@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -109,14 +110,20 @@ public class TestController {
 		return mv;
 	}
 
-	// chat 요청
+	// c-1. chat 입장
 	@GetMapping("/chat")
 	public ModelAndView chat(ModelAndView mv) {
 
 		mv.setViewName("chatting/unicast");
 		return mv;
 	}
-
+	
+	// c-2. 채팅 생성 및 대기 페이지 이동
+	@RequestMapping("chattingPage")
+	public String chatting() {
+		return "chatting/unicast";
+	}
+	
 	// chat 응답
 	@GetMapping("/enterChat")
 	public ModelAndView enterChat(ModelAndView mv) {
