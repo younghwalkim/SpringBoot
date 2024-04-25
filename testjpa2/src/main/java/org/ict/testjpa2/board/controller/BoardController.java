@@ -25,6 +25,14 @@ public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
 
+    @GetMapping()
+    public ResponseEntity<List<BoardDto>> selectList(){
+        log.info("### selectList()");
+
+        /* 목록값 리턴 */
+        return new ResponseEntity<>(boardService.selectList(), HttpStatus.OK);
+    }
+
     @GetMapping("/btop3")
     public ResponseEntity<List<BoardDto>> selectTop3(){
         log.info("### selectTop3()");
@@ -32,6 +40,4 @@ public class BoardController {
         /* 목록값 리턴 */
         return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
     }
-
-
 }

@@ -3,9 +3,9 @@ package org.ict.testjpa2.board.model.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ict.testjpa2.board.jpa.entity.BoardEntity;
-import org.ict.testjpa2.board.jpa.repository.BoardNativeVo;
 import org.ict.testjpa2.board.jpa.repository.BoardRepository;
 import org.ict.testjpa2.board.model.dto.BoardDto;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +31,20 @@ public class BoardService {
         for(int i = 0; i < 3; i++){
             BoardEntity entity = entityList.get(i);
             BoardDto dto = entity.toDtoTop3();
+
+            list.add(dto);
+        }
+
+        return list;
+    }
+
+    public ArrayList<BoardDto> selectList(){
+        List<BoardEntity> entityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"boardNum"));
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for(int i = 0; i < entityList.size(); i++){
+            BoardEntity entity = entityList.get(i);
+            BoardDto dto = entity.toDto();
 
             list.add(dto);
         }

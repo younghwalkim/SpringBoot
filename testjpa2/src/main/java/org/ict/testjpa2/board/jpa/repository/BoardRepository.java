@@ -24,7 +24,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     /* 단, NativeQuery 사용시 컬럼명과 같은 get메소드로만 구성된  nativeVo 인터페이스가 필요함. */
 
     // Top 3 출력용
-    @Query(value = " select board_num, board_title, board_readcount "
+    @Query(value = " select * "
             + " from board order by board_readcount desc ", nativeQuery=true)
     List<BoardEntity> findTop3();
 

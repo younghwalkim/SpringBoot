@@ -60,7 +60,7 @@
         $(function(){
             // 인기게시글 top3, board 테이블의 전체 목록 조회 출력
             $.ajax({
-                url: "/boards/btop3",
+                url: "/boards",
                 type: "GET",
                 dataType: "json",
                 contentType:"application/json; charset=UTF-8",
@@ -81,6 +81,8 @@
                             + "<td>" + json[i].boardNum + "</td>"
                             + "<td style='text-align:left;'><a href='/boardView/" + json[i].boardNum + "'>" + json[i].boardTitle + "</a></td>"
                             + "<td>" + json[i].boardWriter + "</td>"
+                            + "<td>" + json[i].boardDate + "</td>"
+                            + "<td>" + json[i].boardReadCount + "</td>"
                             + "</tr>";
                     }
 
@@ -108,6 +110,8 @@
         <tr><th>번호</th>
             <th>제목</th>
             <th>작성자</th>
+            <th>등록일</th>
+            <th>조회수</th>
         </tr>
     </table>
     <br>
