@@ -1,0 +1,136 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>board View</title>
+    <style>
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width:600px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            width: 120px;
+            background-color: #f2f2f2;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        div#listarea{
+            float:left;
+        }
+        div#inputarea{
+            width: 400px;
+            height: 300px;
+            border: 1px solid darkred;
+            margin-left: 400px;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // 조회 ajax 전송
+            $.ajax({
+                url: "/boards/" + $("div#bno").text(),
+                type: "GET",
+                dataType: "json",
+                contentType:"application/json; charset=UTF-8",
+                success: function(data){
+                    console.log("1. success : " + data);
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log("2. stringify : " + str);
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log("3. parse : " + json);
+
+                    $('div#btitle').text(json.boardTitle);
+                    $('div#bwriter').text(json.boardWriter);
+                    $('div#bcontent').text(json.boardContent);
+                    $('div#bdate').text(json.boardDate);
+                    $('div#breadcount').text(json.boardReadCount);
+
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });  //ajax 전송
+
+            // 삭제 버튼 클릭시
+            $('#deleteBtn').on('click', function (){
+                // ajax 전송
+                $.ajax({
+                    url: "/boards/" + $("div#bno").text(),
+                    type: "DELETE",
+                    dataType: "json",
+                    contentType:"application/json; charset=UTF-8",
+                    success: function(data){
+                        alert("delete ok")
+                        location.href="/boardpage";
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                    }
+                });  //ajax 전송
+            }); // 삭제 버튼 클릭시
+
+            // 수정 버튼 클릭시
+            $('#modifyBtn').on('click', function (){
+                location.href="/boardmodifypage/"+ $("div#bno").text();
+            });
+
+            // 목록 버튼 클릭시
+            $('#listBtn').on('click', function (){
+                location.href="/boardpage";
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{header}"></th:block>
+</div>
+<hr>
+    <h1>Board View</h1>
+    <hr>
+
+    <div id="inputarea" style="border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>게시글 조회</h4>
+        <table>
+            <tr><th>번호</th>
+                <td style='text-align:left;'><div id="bno" th:text="${ bno }"></div></td></tr>
+            <tr><th>제목</th>
+                <td style='text-align:left;'><div id="btitle"></div></td></tr>
+            <tr><th>작성자</th>
+                <td style='text-align:left;'><div id="bwriter"></div></td></tr>
+            <tr><th>등록일</th>
+                <td style='text-align:left;'><div id="bdate"></div></td></tr>
+            <tr><th>조회수</th>
+                <td style='text-align:left;'><div id="breadcount"></div></td></tr>
+            <tr><th>내용</th>
+                <td style='text-align:left;'><div id="bcontent"></div></td></tr>
+            <tr><td colspan="4" style="text-align: center;">
+                    <button id="modifyBtn">수정</button> &nbsp;
+                    <button id="deleteBtn">삭제</button> &nbsp;
+                    <button id="listBtn">목록</button>
+                </td></tr>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.ict.testjpa2.board.model.dto.BoardDto;
 
+import java.util.*;
+
 // board.jpa.entity.BoardEntity.java : board 테이블에 대한 가이드 클래스
 
 @Data
@@ -46,6 +48,13 @@ public class BoardEntity {
     @Column(name="BOARD_DATE")
     private java.util.Date boardDate;
 
+    @PrePersist   //jpa 로 가기 전에 작동됨
+    public void prePersist(){
+        //boardDate 에 현재 날짜 적용
+        GregorianCalendar calendar = new GregorianCalendar();
+        this.boardDate = calendar.getTime();
+    }
+
     // entity --> dto 로 변환하는 메소드 추가함
     public BoardDto toDto(){
         return BoardDto.builder()
@@ -60,6 +69,7 @@ public class BoardEntity {
             .build();
     }
 
+    /* 필요없음.
     // entity --> dto 로 변환하는 메소드 추가함
     public BoardDto toDtoTop3(){
         return BoardDto.builder()
@@ -68,5 +78,6 @@ public class BoardEntity {
                 .boardReadCount(this.boardReadCount)
                 .build();
     }
+    */
 
 }

@@ -1,0 +1,156 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        /* table css */
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        table {
+            width:600px;
+            border-collapse: collapse;
+        }
+        tr {
+            height: 50px;
+        }
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td {
+            text-align: center;
+        }
+
+        /* input css */
+        input[type=text] {
+            width: 200px;
+            padding: 5px 10px;
+            margin: 4px 0;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            outline: none;
+            border-radius: 4px; /* 테두리 둥글게 */
+        }
+        input[type=text]:focus {
+            border: 1px solid #555;
+        }
+
+        /* textarea 스타일 */
+        textarea {
+            width: 350px;
+            height: 100px; /* 높이 지정 */
+            padding: 5px 10px;
+            margin: 4px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            outline: none;
+            border-radius: 4px; /* 테두리 둥글게 */
+        }
+        textarea:focus {
+            border: 1px solid #555;
+        }
+    </style>
+    <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // 조회 ajax 전송
+            $.ajax({
+                url: "/boards/" + $("div#bno").text(),
+                type: "GET",
+                dataType: "json",
+                contentType:"application/json; charset=UTF-8",
+                success: function(data){
+                    console.log("1. success : " + data);
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log("2. stringify : " + str);
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log("3. parse : " + json);
+
+                    $('#btitle').val(json.boardTitle);
+                    $('#bwriter').val(json.boardWriter);
+                    $('#bcontent').val(json.boardContent);
+
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });  //ajax 전송
+
+            // 수정 버튼 클릭시
+            $('#modifyBtn').on('click', function (){
+                // 1. input 태그 접근 & 2. 각 태그에 기록된 값 추출
+                var boardNumValue = $("div#bno").text();
+                var titleVal = $('#btitle').val();
+                var contentVal = $('#bcontent').val();
+
+                // 3. 서버로 전송할 json 객체 생성 - 객체이름과 동일할 것
+                var BoardObject = {
+                    boardNum:boardNumValue,
+                    boardTitle:titleVal,
+                    boardContent:contentVal
+                }
+
+                // ajax 전송
+                $.ajax({
+                    url: "/boards/" + boardNumValue, // 주의! PUT 전송시에는 반드시 url 뒤에 값이 PathVariable 이 필요함. 없으면 POST 전송이 됨.
+                    type: "PUT",
+                    data: JSON.stringify(BoardObject),
+                    contentType:"application/json; charset=UTF-8",
+                    success: function(data){
+                        alert("Modify ok")
+                        // 페이지 새로고침 강제 처리
+                        location.href="/boardmodifypage/" + boardNumValue;
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                    }
+                });  //ajax 전송
+            });
+
+            // 목록 버튼 클릭시
+            $('#listBtn').on('click', function (){
+                location.href="/boardviewpage/"+ $("div#bno").text();
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{header}"></th:block>
+</div>
+<hr>
+    <h1>Board Modify Form</h1>
+    <hr>
+
+    <div id="inputarea" style="border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>게시글 수정</h4>
+        <table>
+            <tr><th><label for="bno"> 번호 </label></th>
+                <td style='text-align:left;'><div id="bno" th:text="${ bno }"></div></td></tr>
+            <tr><th><label for="btitle"> 제목 </label></th>
+                <td style='text-align:left;'><input type="text" name="boardTitle" id="btitle" value=""></td></tr>
+            <tr><th><label for="bwriter"> 작성자 </label></th>
+                <td style='text-align:left;'><input type="text" name="boardWriter" id="bwriter" value=""></td></tr>
+            <tr><th><label for="bcontent"> 내용 </label></th>
+                <td style='text-align:left;'><textarea name="boardContent" id="bcontent"></textarea></td></tr>
+            <tr><td colspan="2" style="text-align: center;">
+                    <button id="modifyBtn">수정</button> &nbsp;
+                    <button id="reset">취소</button> &nbsp;
+                    <button id="listBtn">목록</button>
+                </td></tr>
+        </table>
+    </div>
+
+</body>
+</html>
