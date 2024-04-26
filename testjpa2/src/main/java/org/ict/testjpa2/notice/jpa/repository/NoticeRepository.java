@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.*;
 
 // Mybatis 의 SqlSession 과 같은 역할 수행함, Mybatis 의 Mapper 인터페이스와 같음
 // JPA의 Repository 는 JpaRepository 를 상속받아서 만듦.
@@ -19,8 +19,8 @@ public interface NoticeRepository extends JpaRepository<NoticeEntity, Integer> {
     /* 단, NativeQuery 사용시 컬럼명과 같은 get메소드로만 구성된  nativeVo 인터페이스가 필요함. */
 
     // Top 3 출력용
-    @Query(value = " select * "
-            + " from NOTICE order by NOTICENO desc ", nativeQuery=true)
-    List<NoticeEntity> findTop3();
+    @Query(value = " select NOTICENO, NOTICETITLE, NOTICEDATE "
+            + " from NOTICE order by NOTICEDATE desc ", nativeQuery=true)
+    List<NoticeNativeVo> findTop3();
 
 }

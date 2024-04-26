@@ -9,13 +9,8 @@ import org.ict.testjpa2.board.model.dto.BoardDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -37,6 +32,7 @@ public class BoardService {
         // JPQL은 where, group by 절에서만 서브쿼리 사용 가능함. => from 절에서는 서브쿼리 사용 못 함.
         for(int i = 0; i < 3; i++){
             BoardDto boardDto = new BoardDto();
+
             boardDto.setBoardNum(nativeVoList.get(i).getBoard_num());
             boardDto.setBoardTitle(nativeVoList.get(i).getBoard_title());
             boardDto.setBoardReadCount(nativeVoList.get(i).getBoard_readcount());
@@ -70,10 +66,10 @@ public class BoardService {
         BoardEntity boardEntity = optionalBoardEntity.get();
 
         /* 조회수 변수에 값 담기 */
-        boardEntity.setBoardReadCount(boardEntity.getBoardReadCount() + 1);
+        boardEntity.setBoardReadCount(boardEntity.getBoardReadCount()+1);
+
         /* 저장 */
         boardRepository.save(boardEntity);
-
         return boardEntity.toDto();
     }
 

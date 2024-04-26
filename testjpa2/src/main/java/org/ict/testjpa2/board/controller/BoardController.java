@@ -2,7 +2,6 @@ package org.ict.testjpa2.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ict.testjpa2.board.jpa.repository.BoardRepository;
 import org.ict.testjpa2.board.model.dto.BoardDto;
 import org.ict.testjpa2.board.model.service.BoardService;
 import org.ict.testjpa2.board.model.service.ReplyService;
@@ -10,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
 import java.util.*;
 
 @Slf4j
@@ -28,7 +25,7 @@ public class BoardController {
     // 목록
     @GetMapping()
     public ResponseEntity<List<BoardDto>> selectList(){
-        log.info("### selectList()");
+        log.info("### board selectList()");
 
         /* 목록값 리턴 */
         return new ResponseEntity<>(boardService.selectList(), HttpStatus.OK);
@@ -85,7 +82,7 @@ public class BoardController {
     // Top 3
     @GetMapping("/btop3")
     public ResponseEntity<List<BoardDto>> selectTop3(){
-        log.info("### selectTop3()");
+        log.info("### board selectTop3()");
 
         /* 목록값 리턴 */
         return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);

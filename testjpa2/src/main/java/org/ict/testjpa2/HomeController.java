@@ -1,7 +1,6 @@
 package org.ict.testjpa2;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,15 +19,14 @@ public class HomeController {
     // Board 목록
     @GetMapping("/boardpage")
     public String moveBoardPage() {
-        return "/boardList";
+        return "/board/boardList";
     }
 
     // Board 등록
     @GetMapping("/boardwritepage")
     public String moveBoardWrite() {
-        return "/boardWriteForm";
+        return "/board/boardWriteForm";
     }
-
 
     // Board 상세
     @GetMapping("/boardviewpage/{bno}")
@@ -39,7 +37,7 @@ public class HomeController {
         log.info("### boardNum :" + boardNum);
 
         mv.addObject("bno", boardNum);
-        mv.setViewName("/boardView");
+        mv.setViewName("/board/boardView");
 
         return mv;
     }
@@ -53,7 +51,7 @@ public class HomeController {
         log.info("### boardNum :" + boardNum);
 
         mv.addObject("bno", boardNum);
-        mv.setViewName("/boardModifyForm");
+        mv.setViewName("/board/boardModifyForm");
 
         return mv;
     }
@@ -61,13 +59,27 @@ public class HomeController {
     // Notice 목록
     @GetMapping("/noticepage")
     public String moveNoticePage() {
-        return "/noticeList";
+        return "/notice/noticeList";
+    }
+
+    // Notice 상세
+    @GetMapping("/noticeviewpage/{no}")
+    public ModelAndView moveNoticeView(
+            @PathVariable("no") int noticeNum,
+            ModelAndView mv) {
+
+        log.info("### noticeNo :" + noticeNum);
+
+        mv.addObject("no", noticeNum);
+        mv.setViewName("/notice/noticeView");
+
+        return mv;
     }
 
     // member 가입
     @GetMapping("/memberpage")
     public String moveMemberPage() {
-        return "/member";
+        return "/member/member";
     }
 
 }

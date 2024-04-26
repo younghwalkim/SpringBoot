@@ -108,7 +108,7 @@
                     success: function(data){
                         alert("Modify ok")
                         // 페이지 새로고침 강제 처리
-                        location.href="/boardmodifypage/" + boardNumValue;
+                        location.href="/boardviewpage/" + boardNumValue;
                     },
                     error: function(jqXHR, textStatus, errorThrown){
                         console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -147,7 +147,7 @@
             <tr><td colspan="2" style="text-align: center;">
                     <button id="modifyBtn">수정</button> &nbsp;
                     <button id="reset">취소</button> &nbsp;
-                    <button id="listBtn">목록</button>
+                    <button id="listBtn">상세페이지로 이동</button>
                 </td></tr>
         </table>
     </div>
