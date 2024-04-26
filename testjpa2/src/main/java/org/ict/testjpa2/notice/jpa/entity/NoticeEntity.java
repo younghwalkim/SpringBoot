@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.ict.testjpa2.board.model.dto.BoardDto;
+import org.ict.testjpa2.notice.model.dto.NoticeDto;
 
 @Data
 @Entity     // JPA가 관리함, 테이블과 DTO(VO) 클래스 매팅시 반드시 필요함.
@@ -47,4 +49,29 @@ public class NoticeEntity {
 
     @Column(name="READCOUNT")
     private int readCount;
+
+    // entity --> dto 로 변환하는 메소드 추가함
+    public NoticeDto toDto(){
+        return NoticeDto.builder()
+                .noticeNo(this.noticeNo)
+                .noticeTitle(this.noticeTitle)
+                .noticeDate(this.noticeDate)
+                .noticeWriter(this.noticeWriter)
+                .noticeContent(this.noticeContent)
+                .originalFilePath(this.originalFilePath)
+                .renameFilePath(this.renameFilePath)
+                .importance(this.importance)
+                .impEndDate(this.impEndDate)
+                .readCount(this.readCount)
+                .build();
+    }
+
+    // entity --> dto 로 변환하는 메소드 추가함
+    public NoticeDto toDtoTop3(){
+        return NoticeDto.builder()
+                .noticeNo(this.noticeNo)
+                .noticeTitle(this.noticeTitle)
+                .noticeDate(this.noticeDate)
+                .build();
+    }
 }

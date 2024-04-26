@@ -24,10 +24,20 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     /* 단, NativeQuery 사용시 컬럼명과 같은 get메소드로만 구성된  nativeVo 인터페이스가 필요함. */
 
     // Top 3 출력용
-    @Query(value = " select * "
+    @Query(value = " select BOARD_NUM, BOARD_TITLE, BOARD_READCOUNT "
             + " from board order by board_readcount desc ", nativeQuery=true)
-    List<BoardEntity> findTop3();
+    List<BoardNativeVo> findTop3();
 
+    // 조회수 증가 - 미사용중
+    @Query(value = " update board set board_readcount = board_readcount "
+            + " where board_num = :boardNum", nativeQuery=true)
+    void readcountadd(@Param("boardNum") int boardNum);
+
+    // 신규등록을 위한 마지막 번호
+    @Query(value = " select max(BOARD_NUM) from board", nativeQuery=true)
+    int findLastBoardNum();
+
+    /*
     // 제목검색 갯수
     @Query(value = " select count(*) from board where board_title like %:keyword%", nativeQuery=true)
     Long countSearchTitle(@Param("keyword") String keyword);
@@ -39,7 +49,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     // 날짜검색 갯수
     @Query(value = " select count(*) from board where board_date between :begin and :end ", nativeQuery=true)
     Long countSearchDate(@Param("begin") java.sql.Date begin, @Param("end") java.sql.Date end );
-
+    */
 
     /* 방법 3. @Query + JPQL 사용 (엔티티와 프로퍼티 사용) */
     // 제목 검색
