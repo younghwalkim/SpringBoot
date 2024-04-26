@@ -80,7 +80,8 @@
                     for(var i in json){
                         values += "<tr>"
                             + "<td>" + json[i].boardNum + "</td>"
-                            + "<td style='text-align:left;'><a href='/boardviewpage/" + json[i].boardNum + "'>" + json[i].boardTitle + "</a></td>"
+                            + "<td style='text-align:left;'><a href='/boardviewpage/" + json[i].boardNum + "'>"
+                            + json[i].boardTitle + "</a></td>"
                             + "<td>" + json[i].boardWriter + "</td>"
                             + "<td>" + json[i].boardDate + "</td>"
                             + "<td>" + json[i].boardReadCount + "</td>"
@@ -115,8 +116,8 @@
 <h1>Board List : jpa 2번째 방법 적용</h1>
 <hr>
 <div style="float:left;border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
-    <h4>인기 게시글</h4>
-    <button id="insertForm">등록</button>
+    <h4>게시글</h4>
+    <div style="padding-bottom: 20px;"><button id="insertForm">등록</button></div>
     <table id="toplist">
         <tr><th>번호</th>
             <th>제목</th>

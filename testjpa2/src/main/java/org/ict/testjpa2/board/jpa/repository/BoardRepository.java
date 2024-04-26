@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 // Mybatis 의 SqlSession 과 같은 역할 수행함, Mybatis 의 Mapper 인터페이스와 같음
 // JPA의 Repository 는 JpaRepository 를 상속받아서 만듦.
@@ -28,10 +27,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
             + " from board order by board_readcount desc ", nativeQuery=true)
     List<BoardNativeVo> findTop3();
 
-    // 조회수 증가 - 미사용중
+    /*// 조회수 증가 - 미사용중
     @Query(value = " update board set board_readcount = board_readcount "
             + " where board_num = :boardNum", nativeQuery=true)
     void readcountadd(@Param("boardNum") int boardNum);
+    */
 
     // 신규등록을 위한 마지막 번호
     @Query(value = " select max(BOARD_NUM) from board", nativeQuery=true)

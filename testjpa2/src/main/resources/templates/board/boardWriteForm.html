@@ -75,6 +75,12 @@
                     }
                 });  //ajax 전송
             });
+
+            // 목록 버튼 클릭시
+            $('#listBtn').on('click', function (){
+                location.href="/boardpage";
+            });
+
         });
     </script>
 </head>
@@ -98,7 +104,8 @@
                 <td><textarea name="boardContent" id="bcontent"></textarea></td></th></tr>
             <tr><td colspan="4" style="text-align: center;">
                     <button id="registerBtn">등록</button> &nbsp;
-                    <button type="reset">취소</button> &nbsp;
+                    <button type="reset">취소</button>  &nbsp;
+                    <button id="listBtn">목록</button>&nbsp;
                 </td></tr>
         </table>
     </div>

@@ -5,6 +5,8 @@ import lombok.*;
 import org.ict.testjpa2.board.jpa.entity.BoardEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+
 @Data   //@ToString, @Getter, @Setter,...
 @Builder
 @Component
@@ -22,7 +24,7 @@ public class BoardDto {
     private int boardReadCount;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private java.util.Date boardDate;
+    private Date boardDate;
 
     // dto--> entity 로 변환하는 메소드 추가함
     public BoardEntity toEntity(){

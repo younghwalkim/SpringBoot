@@ -1,15 +1,13 @@
 package org.ict.testjpa2.notice.jpa.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ict.testjpa2.board.model.dto.BoardDto;
 import org.ict.testjpa2.notice.model.dto.NoticeDto;
+
+import java.util.*;
 
 @Data
 @Entity     // JPA가 관리함, 테이블과 DTO(VO) 클래스 매팅시 반드시 필요함.
@@ -27,7 +25,7 @@ public class NoticeEntity {
     private String noticeTitle;
 
     @Column(name="NOTICEDATE")
-    private java.sql.Date noticeDate;
+    private Date noticeDate;
 
     @Column(name="NOTICEWRITER")
     private String noticeWriter;
@@ -45,10 +43,18 @@ public class NoticeEntity {
     private String importance;
 
     @Column(name="IMP_END_DATE")
-    private java.sql.Date impEndDate;
+    private Date impEndDate;
 
     @Column(name="READCOUNT")
     private int readCount;
+
+    @PrePersist   //jpa 로 가기 전에 작동됨
+    public void prePersist(){
+        //boardDate 에 현재 날짜 적용
+        GregorianCalendar calendar = new GregorianCalendar();
+        this.noticeDate = calendar.getTime();
+        this.impEndDate = calendar.getTime();
+    }
 
     // entity --> dto 로 변환하는 메소드 추가함
     public NoticeDto toDto(){
@@ -66,6 +72,7 @@ public class NoticeEntity {
                 .build();
     }
 
+    /*
     // entity --> dto 로 변환하는 메소드 추가함
     public NoticeDto toDtoTop3(){
         return NoticeDto.builder()
@@ -74,4 +81,5 @@ public class NoticeEntity {
                 .noticeDate(this.noticeDate)
                 .build();
     }
+    */
 }
