@@ -119,7 +119,9 @@
 </head>
 <body>
 
-[ <a href="/">Home</a> | <a href="/boardpage">board</a> | <a href="/noticepage">notice</a> | <a href="/memberpage">member</a> ]
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{header}"></th:block>
+</div>
 
 <hr>
     <h1>SpringBoot JPA Test II Project</h1>
@@ -150,6 +152,12 @@
             </tr>
         </table>
     </div>
+
+
+<hr style="clear: both;">
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{footer}"></th:block>
+</div>
 
 </body>
 </html>
