@@ -1,0 +1,82 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Wrapper */
+        #wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        #header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        #navigation {
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+        #navigation ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        #navigation li {
+            margin-right: 20px;
+        }
+        #navigation a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Content */
+        #content {
+            padding: 20px;
+        }
+
+        /* Footer */
+        #footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="header">
+        <!-- Header content goes here -->
+    </div>
+    <div id="navigation">
+        <!-- Navigation menu goes here -->
+        <div style="border: 1px solid #00b7ff; padding:10px;">
+            <th:block th:replace="~{header}"></th:block>
+        </div>
+    </div>
+    <div id="content">
+        <!-- Main content goes here -->
+        <h1 th:utext="${data}">message</h1>
+        <h1 th:text="${data}">message</h1>
+        hi. thymeleaf <br>
+        수정 후 배포
+    </div>
+    <div id="footer">
+        <!-- Footer content goes here -->
+    </div>
+</div>
+
+
+</body>
+</html>
