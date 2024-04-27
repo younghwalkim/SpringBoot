@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="542e00eb-638b-4444-9e99-6dd193914486" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/MainController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/thymeleaf/main.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/view.html" afterDir="false" />
-    </list>
+    <list default="true" id="542e00eb-638b-4444-9e99-6dd193914486" name="Changes" comment="home demo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -175,11 +169,24 @@
       <updated>1714178029698</updated>
       <workItem from="1714178030870" duration="486000" />
       <workItem from="1714181384253" duration="1600000" />
-      <workItem from="1714210169560" duration="8213000" />
+      <workItem from="1714210169560" duration="8871000" />
     </task>
+    <task id="LOCAL-00001" summary="home demo">
+      <option name="closed" value="true" />
+      <created>1714222356055</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714222356055</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="home demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="home demo" />
   </component>
 </project>
