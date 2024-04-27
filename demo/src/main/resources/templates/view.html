@@ -1,0 +1,85 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 대화형 뷰(Desktop) */
+        body {
+            background-color: #F0F0F0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #FFF;
+        }
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .section p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* 모바일 뷰(Mobile) */
+        @media screen and (max-width: 767px) {
+            body {
+                font-size: 14px;
+            }
+            .container {
+                padding: 0 10px;
+            }
+            .section {
+                margin: 20px 0;
+                padding: 10px;
+            }
+            .section h2 {
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+            .section p {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="border: 1px solid #00b7ff; padding:10px;">
+        <th:block th:replace="~{header}"></th:block>
+    </div>
+    <div class="section">
+        <h2>반응형 웹 예제</h2>
+        <p>이 페이지는 반응형 웹 기술을 이용해 제작되었습니다.</p>
+    </div>
+    <div class="section">
+        <h2>장점</h2>
+        <ul>
+            <li>PC와 모바일 기기 모두에서 최적화된 사용 경험을 제공합니다.</li>
+            <li>한 번의 작업으로 여러 화면 크기를 대응할 수 있습니다.</li>
+            <li>검색 엔진 최적화(SEO)를 개선할 수 있습니다.</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>단점</h2>
+        <ul>
+            <li>디자인과 구현이 복잡해질 수 있습니다.</li>
+            <li>모바일 기기에서는 PC보다 더 많은 대역폭이 필요합니다.</li>
+            <li>모바일 기기에서의 성능 문제가 발생할 수 있습니다.</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
