@@ -6,6 +6,8 @@ import org.ict.testjpa2.board.jpa.entity.BoardEntity;
 import org.ict.testjpa2.board.jpa.repository.BoardNativeVo;
 import org.ict.testjpa2.board.jpa.repository.BoardRepository;
 import org.ict.testjpa2.board.model.dto.BoardDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +45,7 @@ public class BoardService {
         return list;
     }
     
-    // 목록
+    /* 목록
     public ArrayList<BoardDto> selectList(){
         List<BoardEntity> entityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"boardNum"));
         ArrayList<BoardDto> list = new ArrayList<>();
@@ -55,6 +57,20 @@ public class BoardService {
             list.add(dto);
         }
 
+        return list;
+    }
+    */
+
+    // 목록 - paging
+    public ArrayList<BoardDto> selectList(Pageable pageable){
+        Page<BoardEntity> pages = boardRepository.findAll(pageable);
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for(BoardEntity entity : pages){
+            BoardDto boardDto = entity.toDto();
+            list.add(boardDto);
+        }
+        
         return list;
     }
 

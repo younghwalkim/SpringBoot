@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.ict.testjpa2.board.model.dto.BoardDto;
 import org.ict.testjpa2.board.model.service.BoardService;
 import org.ict.testjpa2.board.model.service.ReplyService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +25,27 @@ public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
 
+    // 조회 Top 3
+    @GetMapping("/btop3")
+    public ResponseEntity<List<BoardDto>> selectTop3(){
+        log.info("### /boards/btop3 => selectTop3() ");
+
+        // 3개 리턴
+        return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
+    }
+
     // 목록
-    @GetMapping()
-    public ResponseEntity<List<BoardDto>> selectList(){
-        log.info("### board selectList()");
+    @GetMapping("/list")
+    public ResponseEntity<List<BoardDto>> selectList(
+            @RequestParam(name="page") int page,
+            @RequestParam(name="limit") int limit){
+        log.info("### /boards/list : " + page + ", " + limit);
+
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
 
         /* 목록값 리턴 */
-        return new ResponseEntity<>(boardService.selectList(), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.selectList(pageable), HttpStatus.OK);
     }
 
     // 상세조회
@@ -79,12 +96,4 @@ public class BoardController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    // Top 3
-    @GetMapping("/btop3")
-    public ResponseEntity<List<BoardDto>> selectTop3(){
-        log.info("### board selectTop3()");
-
-        /* 목록값 리턴 */
-        return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
-    }
 }
