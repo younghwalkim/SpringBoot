@@ -54,11 +54,27 @@
             float: left;
         }
 
+        /* 검색영역 */
+        fieldset#ss {
+            width: 600px;
+            position: relative;
+            left: 450px;
+        }
+        div fieldset {
+            width: 600px;
+        }
+        div.sfield {
+            background: lightgray;
+            width: 630px;
+            position: relative;
+            left: 0px;
+            display: none;  /* 안 보이게 함 */
+        }
+
     </style>
     <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
-
             // 인기게시글 top3, board 테이블의 전체 목록 조회 출력
             $.ajax({
                 url: "/boards",
@@ -88,22 +104,33 @@
                             + "</tr>";
                     }
 
-                    $('#toplist').html($('#toplist').html() + values);
-                    //$('#toplist').append(values);
+                    $('#boardlist').html($('#boardlist').html() + values);
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
                 }
             });  //ajax
 
-            // 목록 버튼 클릭시
+            // 검색 :  input 태그의 name 이 item 의 값이 바뀌면(change) 작동되는 이벤트 핸들러 작성
+            $('input[name=item]').on('change', function(){
+                //여러 개의 태그 중에서 체크표시가 된 태그를 선택
+                $('input[name=item]').each(function(index){
+                    //선택된 radio 순번대로 하나씩 checked 인지 확인함
+                    if($(this).is(':checked')){
+                        //체크 표시된 아이템에 대한 폼이 보여지게 처리함
+                        $('div.sfield').eq(index).css('display', 'block');
+                    }else{
+                        //체크 표시 안된 아이템의 폼은 안 보이게 처리함
+                        $('div.sfield').eq(index).css('display', 'none');
+                    }
+                });  //each
+            });  //on
+
+            // 등록 버튼 클릭시
             $('#insertForm').on('click', function (){
                 location.href="/boardwritepage";
             });
         });
-
-
-
     </script>
 </head>
 <body>
@@ -114,24 +141,226 @@
 
 <hr>
 <h1>Board List : jpa 2번째 방법 적용</h1>
-<hr>
-<div style="float:left;border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
-    <h4>게시글</h4>
-    <div style="padding-bottom: 20px;"><button id="insertForm">등록</button></div>
-    <table id="toplist">
-        <tr><th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>조회수</th>
-        </tr>
-    </table>
-    <br>
-    <div class="pagination">
-        <button class="pagination-btn prev-btn" disabled>Previous</button>
-        <button class="pagination-btn next-btn">Next</button>
+
+<hr style="clear: both">
+
+<div id="listarea" style="align:center">
+
+<!--
+    <div style="align:center;margin-left: 500px;">
+        <button onclick="fn_list(1);" >목록보기</button>
     </div>
-</div>
+-->
+
+    <div id="searcharea">
+        <!-- 항목별 검색 기능 추가 -->
+        <fieldset id="ss">
+            <legend>검색할 항목을 선택하세요.</legend>
+            <input type="radio" name="item" id="title"> 제목 &nbsp;
+            <input type="radio" name="item" id="writer"> 작성자 &nbsp;
+            <input type="radio" name="item" id="date"> 등록날짜 &nbsp;
+        </fieldset>
+        <br>
+        <!-- 검색 항목별 값 입력 전송용 양식 만들기 -->
+        <!-- 제목 검색  -->
+        <div id="titlediv" class="sfield">
+            <fieldset>
+                <legend>검색할 제목을 입력하세요.</legend>
+                <input type="search" id="tkeyword"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchTitle(1);">
+            </fieldset>
+        </div>
+
+        <!-- 작성자 검색  -->
+        <div id="writerdiv" class="sfield">
+            <fieldset>
+                <legend>검색할 작성자를 입력하세요.</legend>
+                <input type="search" id="wkeyword"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchWriter(1);">
+            </fieldset>
+        </div>
+
+        <!-- 등록날짜 검색 폼 -->
+        <div id="datediv" class="sfield">
+            <fieldset>
+                <legend>검색할 등록날짜를 선택하세요.</legend>
+                <input type="date" id="begin"> ~ <input type="date" id="end"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchDate(1);">
+            </fieldset>
+        </div>
+    </div>
+
+    <div style="float:left;border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>게시글</h4>
+        <div style="padding-bottom: 20px;"><button id="insertForm">등록</button></div>
+        <table id="boardlist">
+            <tr><th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+            </tr>
+        </table>
+        <br>
+        <div class="pagination">
+            <button class="pagination-btn prev-btn" disabled>Previous</button>
+            <button class="pagination-btn next-btn">Next</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function fn_searchTitle(page){
+            $.ajax({
+                url: "/boards/title",
+                type: 'GET',
+                data: {
+                    keyword : $('#tkeyword').val(),
+                    page : page,
+                    limit : 10
+                },
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                success: function(data){
+                    console.log("success : " + data);   // [Object, object]
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log(str)
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log(json)
+
+                    values = "<tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>조회수</th></tr>";
+                    for(var i in json) {
+                        if (json[i].boardOriginalFileName != null && json[i].boardOriginalFileName.length > 0) {
+                            values += "<tr><td>" + json[i].boardNum
+                                + "</td><td><a href='#'  onclick='fn_detail(" + json[i].boardNum + ");' >"
+                                + json[i].boardTitle
+                                +  "<img src='/images/file_clip.png' width='15' height='15'></a></td><td>"
+                                + json[i].boardWriter + "</td><td>"
+                                + json[i].boardDate + "</td><td>"
+                                + json[i].boardReadCount + "</td></tr>";
+                        }else{
+                            values += "<tr><td>" + json[i].boardNum
+                                + "</td><td><a href='#'  onclick='fn_detail(" + json[i].boardNum + ");' >"
+                                + json[i].boardTitle  + "</a></td><td>"
+                                + json[i].boardWriter + "</td><td>"
+                                + json[i].boardDate + "</td><td>"
+                                + json[i].boardReadCount + "</td></tr>";
+                        }
+                    }  //for
+
+                    $('#boardlist').html(values);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });
+        }
+
+        function fn_searchWriter(page){
+            $.ajax({
+                url: '/boards/writer',
+                type: 'GET',
+                data: {
+                    keyword : $('#wkeyword').val(),
+                    page : page,
+                    limit : 10
+                },
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                success: function(data){
+                    console.log("success : " + data);   // [Object, object]
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log(str)
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log(json)
+
+                    values = "<tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>조회수</th></tr>";
+                    for(var i in json) {
+                        if (json[i].boardOriginalFileName != null && json[i].boardOriginalFileName.length > 0) {
+                            values += "<tr><td>" + json[i].boardNum
+                                + "</td><td><a href='#'  onclick='fn_detail(" + json[i].boardNum + ");' >"
+                                + json[i].boardTitle
+                                +  "<img src='/images/file_clip.png' width='15' height='15'></a></td><td>"
+                                + json[i].boardWriter + "</td><td>"
+                                + json[i].boardDate + "</td><td>"
+                                + json[i].boardReadCount + "</td></tr>";
+                        }else{
+                            values += "<tr><td>" + json[i].boardNum
+                                + "</td><td><a href='#'  onclick='fn_detail(" + json[i].boardNum + ");' >"
+                                + json[i].boardTitle  + "</a></td><td>"
+                                + json[i].boardWriter + "</td><td>"
+                                + json[i].boardDate + "</td><td>"
+                                + json[i].boardReadCount + "</td></tr>";
+                        }
+                    }  //for
+
+                    $('#boardlist').html(values);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });
+        }
+
+        function fn_searchDate(page){
+            $.ajax({
+                url:  '/boards/date',
+                type: 'GET',
+                data: {
+                    begin : $('#begin').val(),
+                    end : $('#end').val(),
+                    page : page,
+                    limit : 10},
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                success: function(data){
+                    console.log("success : " + data);   // [Object, object]
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log(str)
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log(json)
+
+                    values = "<tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>조회수</th></tr>";
+                    for(var i in json) {
+                        if (json[i].boardOriginalFileName != null && json[i].boardOriginalFileName.length > 0) {
+                            values += "<tr><td>" + json[i].boardNum
+                                + "</td><td><a href='#'  onclick='fn_detail(" + json[i].boardNum + ");' >"
+                                + json[i].boardTitle
+                                +  "<img src='/images/file_clip.png' width='15' height='15'></a></td><td>"
+                                + json[i].boardWriter + "</td><td>"
+                                + json[i].boardDate + "</td><td>"
+                                + json[i].boardReadCount + "</td></tr>";
+                        }else{
+                            values += "<tr><td>" + json[i].boardNum
+                                + "</td><td><a href='#'  onclick='fn_detail(" + json[i].boardNum + ");' >"
+                                + json[i].boardTitle  + "</a></td><td>"
+                                + json[i].boardWriter + "</td><td>"
+                                + json[i].boardDate + "</td><td>"
+                                + json[i].boardReadCount + "</td></tr>";
+                        }
+                    }  //for
+
+                    $('#boardlist').html(values);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });
+        }
+    </script>
+
+
 
 </body>
 </html>

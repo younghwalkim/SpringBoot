@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.ict.testjpa2.board.model.dto.BoardDto;
 import org.ict.testjpa2.board.model.service.BoardService;
 import org.ict.testjpa2.board.model.service.ReplyService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,4 +90,38 @@ public class BoardController {
         /* 목록값 리턴 */
         return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
     }
+
+    @GetMapping("/title")
+    public ResponseEntity<List<BoardDto>> selectSearchTitle(
+            @RequestParam(name="keyword") String keyword,  @RequestParam(name="page") int page,
+            @RequestParam(name="limit") int limit){
+        log.info("/boards/title : " + keyword + ", " + page + ", " + limit);
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+        //페이지에 출력할 목록 조회해 옴    => 응답 처리
+        return new ResponseEntity<>(boardService.selectSearchTitle(keyword, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("/writer")
+    public ResponseEntity<List<BoardDto>> selectSearchWriter(
+            @RequestParam(name="keyword") String keyword,  @RequestParam(name="page") int page,
+            @RequestParam(name="limit") int limit){
+        log.info("/boards/list : " + page + ", " + limit);
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+        //페이지에 출력할 목록 조회해 옴    => 응답 처리
+        return new ResponseEntity<>(boardService.selectSearchWriter(keyword, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<List<BoardDto>> selectSearchDate(
+            @RequestParam(name="begin") java.sql.Date begin, @RequestParam(name="end") java.sql.Date end,
+            @RequestParam(name="page") int page, @RequestParam(name="limit") int limit){
+        log.info("/boards/list : " + page + ", " + limit);
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+        //페이지에 출력할 목록 조회해 옴    => 응답 처리
+        return new ResponseEntity<>(boardService.selectSearchDate(begin, end, pageable), HttpStatus.OK);
+    }
+
 }

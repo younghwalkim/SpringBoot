@@ -6,7 +6,7 @@ import org.ict.testjpa2.board.jpa.entity.BoardEntity;
 import org.ict.testjpa2.board.jpa.repository.BoardNativeVo;
 import org.ict.testjpa2.board.jpa.repository.BoardRepository;
 import org.ict.testjpa2.board.model.dto.BoardDto;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,5 +104,58 @@ public class BoardService {
 
         /* insert 처리 */
         boardRepository.save(boardDto.toEntity());
+    }
+
+    /*
+    //제목 검색에 대한 목록 갯수
+    public long getCountSearchTitle(String keyword){
+        return boardRepository.countSearchTitle(keyword);
+    }
+
+    //작성자 검색에 대한 목록 갯수
+    public long getCountSearchWriter(String keyword){
+        return boardRepository.countSearchWriter(keyword);
+    }
+
+    //등록날짜 검색에 대한 목록 갯수
+    public long getCountSearchDate(java.sql.Date begin, java.sql.Date end){
+        return boardRepository.countSearchDate(begin, end);
+    }
+    */
+
+    public ArrayList<BoardDto> selectSearchTitle(String keyword, Pageable pageable) {
+        Page<BoardEntity> pages = boardRepository.findSearchTitle(keyword, pageable);
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for(BoardEntity entity : pages){
+            BoardDto boardDto = entity.toDto();
+            list.add(boardDto);
+        }
+
+        return list;
+    }
+
+    public ArrayList<BoardDto> selectSearchWriter(String keyword, Pageable pageable) {
+        Page<BoardEntity> pages = boardRepository.findSearchWriter(keyword, pageable);
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for(BoardEntity entity : pages){
+            BoardDto boardDto = entity.toDto();
+            list.add(boardDto);
+        }
+
+        return list;
+    }
+
+    public ArrayList<BoardDto> selectSearchDate(java.sql.Date begin, java.sql.Date end, Pageable pageable) {
+        Page<BoardEntity> pages = boardRepository.findSearchDate(begin, end, pageable);
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for(BoardEntity entity : pages){
+            BoardDto boardDto = entity.toDto();
+            list.add(boardDto);
+        }
+
+        return list;
     }
 }
