@@ -1,0 +1,152 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>board View</title>
+    <style>
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width:600px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            width: 120px;
+            background-color: #f2f2f2;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        div#listarea{
+            float:left;
+        }
+        div#inputarea{
+            width: 400px;
+            height: 300px;
+            border: 1px solid darkred;
+            margin-left: 400px;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // 조회 ajax 전송
+            $.ajax({
+                url: "/members/" + $("div#userId").text(),
+                type: "GET",
+                dataType: "json",
+                contentType:"application/json; charset=UTF-8",
+                success: function(data){
+                    console.log("1. success : " + data);
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log("2. stringify : " + str);
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log("3. parse : " + json);
+
+                    $('div#userPwd').text(json.userPwd);
+                    $('div#userName').text(json.userName);
+                    $('div#gender').text(json.gender);
+                    $('div#age').text(json.age);
+                    $('div#phone').text(json.phone);
+                    $('div#email').text(json.email);
+                    $('div#signType').text(json.signType);
+                    $('div#adminYN').text(json.adminYN);
+                    $('div#loginOk').text(json.loginOk);
+
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });  //ajax 전송
+
+            // 삭제 버튼 클릭시
+            $('#deleteBtn').on('click', function (){
+                if (confirm("정말 삭제하시겠습니까?")) {
+                    // ajax 전송
+                    $.ajax({
+                        url: "/members/" + $("div#userId").text(),
+                        type: "DELETE",
+                        dataType: "json",
+                        contentType:"application/json; charset=UTF-8",
+                        success: function(data){
+                            alert("delete ok")
+                            location.href="/mlistpage";
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                        }
+                    });  //ajax 전송
+                }
+            }); // 삭제 버튼 클릭시
+
+            // 수정 버튼 클릭시
+            $('#modifyBtn').on('click', function (){
+                location.href="/boardmodifypage/"+ $("div#bno").text();
+            });
+
+            // 목록 버튼 클릭시
+            $('#listBtn').on('click', function (){
+                location.href="/mlistpage";
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{header}"></th:block>
+</div>
+<hr>
+    <h1>Board View</h1>
+    <hr>
+
+    <div id="inputarea" style="border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>회원정보 조회</h4>
+        <table>
+            <tr><th><label for="userId"> userId  </label></th>
+                <td><div id="userId" th:text="${ userId }"></div></td></tr>
+            <tr><th><label for="userPwd"> userPwd </label></th>
+                <td><div id="userPwd" th:text="${ userPwd }"></div></td></tr>
+            <tr><th><label for="userName"> userName </label></th>
+                <td><div id="userName" th:text="${ userName }"></div></td></tr>
+            <tr><th><label for="gender"> gender </label></th>
+                <td><div id="gender" th:text="${ gender }"></div></td></tr>
+            <tr><th><label for="age"> age </label></th>
+                <td><div id="age" th:text="${ age }"></div></td></tr>
+            <tr><th><label for="phone"> phone </label></th>
+                <td><div id="phone" th:text="${ phone }"></div></td></tr>
+            <tr><th><label for="email"> email </label></th>
+                <td><div id="email" th:text="${ email }"></div></td></tr>
+            <tr><th><label for="signType"> signType </label></th>
+                <td><div id="signType" th:text="${ signType }"></div></td></tr>
+            <tr><th><label for="adminYN"> adminYN </label></th>
+                <td><div id="adminYN" th:text="${ adminYN }"></div></td></tr>
+            <tr><th><label for="loginOk"> loginOk </label></th>
+                <td><div id="loginOk" th:text="${ loginOk }"></div></td></tr>
+            <tr><th><label for="photoFileName"> photoFileName </label></th>
+                <td><input type="file" name="photoFileName" id="photoFileName"></td></tr>
+            <tr><td colspan="4" style="text-align: center;">
+                <button id="modifyBtn">수정</button> &nbsp;
+                <button id="deleteBtn">삭제</button>  &nbsp;
+                <button id="listBtn">목록</button>&nbsp;
+            </td></tr>
+        </table>
+    </div>
+
+</body>
+</html>
