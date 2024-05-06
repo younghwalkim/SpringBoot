@@ -51,8 +51,7 @@ public class BoardEntity {
     @PrePersist   //jpa 로 가기 전에 작동됨
     public void prePersist(){
         //boardDate 에 현재 날짜 적용
-        GregorianCalendar calendar = new GregorianCalendar();
-        this.boardDate = calendar.getTime();
+        boardDate = new Date(System.currentTimeMillis());
     }
 
     // entity --> dto 로 변환하는 메소드 추가함

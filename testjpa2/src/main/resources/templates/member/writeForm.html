@@ -1,0 +1,147 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width:600px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td {
+            text-align: left;
+        }
+
+        div#listarea{
+            float:left;
+        }
+        div#inputarea{
+            width: 400px;
+            height: 300px;
+            border: 1px solid darkred;
+            margin-left: 400px;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // 등록버튼 클릭시
+            $('#registerBtn').on('click', function () {
+
+                // 서버로 전송할 json 객체 생성 - 객체이름과 동일할 것
+                var MemberObject = {
+                    userId:$('#userId').val(),
+                    userPwd:$('#userPwd').val(),
+                    userName:$('#userName').val(),
+                    gender:$('input[name=gender]:checked').val(),
+                    age:$('#age').val(),
+                    phone:$('#phone').val(),
+                    email:$('#email').val(),
+                    signType:$('input[name=signType]:checked').val(),
+                    adminYN:$('input[name=adminYN]:checked').val(),
+                    loginOk:$('input[name=loginOk]:checked').val()
+                }
+
+                // ajax 전송
+                $.ajax({
+                    url: "/members",
+                    type: "POST",
+                    data: JSON.stringify(MemberObject),
+                    contentType:"application/json; charset=UTF-8",
+                    success: function(){
+                        alert("Insert ok");
+                        // 페이지 새로고침 강제 처리
+                        location.href='/mlistpage';
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                    }
+                });  //ajax 전송
+            });
+
+            // 목록 버튼 클릭시
+            $('#listBtn').on('click', function (){
+                location.href="/boardpage";
+            });
+
+
+            // 특정 라디오 버튼을 체크하는 함수
+            function checkRadioButton(radioButtonId) {
+                // 라디오 버튼 요소 선택
+                const radioButton = document.getElementById(radioButtonId);
+                // 라디오 버튼 체크
+                radioButton.checked = true;
+            }
+
+            // 기본정보 체크
+            checkRadioButton('male');
+            checkRadioButton('signTypeD');
+            checkRadioButton('adminN');
+            checkRadioButton('loginOkY');
+
+        });
+    </script>
+</head>
+<body>
+
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{header}"></th:block>
+</div>
+<hr>
+    <h1>Board WriteForm</h1>
+    <hr>
+
+    <div id="inputarea" style="border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>회원 등록</h4>
+        <table>
+            <tr><th><label for="userId"> userId  </label></th>
+                <td><input type="text" name="userId" id="userId"></td></tr>
+            <tr><th><label for="userPwd"> userPwd </label></th>
+                <td><input type="password" name="userPwd" id="userPwd"></td></tr>
+            <tr><th><label for="userName"> userName </label></th>
+                <td><input type="text" name="userName" id="userName"></td></tr>
+            <tr><th><label> gender </label></th>
+                <td><input type="radio" name="gender" id="male" value="M">남자
+                    <input type="radio" name="gender" id="female" value="F">여자</td></tr>
+            <tr><th><label for="age"> age </label></th>
+                <td><input type="text" name="age" id="age"></td></tr>
+            <tr><th><label for="phone"> phone </label></th>
+                <td><input type="text" name="phone" id="phone"></td></tr>
+            <tr><th><label for="email"> email </label></th>
+                <td><input type="text" name="email" id="email"></td></tr>
+            <tr><th><label> signType </label></th>
+                <td><input type="radio" name="signType" id="signTypeD" value="direct">직접
+                    <input type="radio" name="signType" id="signTypeA" value="admin">관리자</td></tr>
+            <tr><th><label> adminYN </label></th>
+                <td><input type="radio" name="adminYN" id="adminY" value="Y">관리자
+                    <input type="radio" name="adminYN" id="adminN" value="N">일반</td></tr>
+            <tr><th><label> loginOk </label></th>
+                <td><input type="radio" name="loginOk" id="loginOkY" value="Y">로그인 허용
+                    <input type="radio" name="loginOk" id="loginOkN" value="N">로그인 불가</td></tr>
+            <tr><th><label for="photoFileName"> photoFileName </label></th>
+                <td><input type="file" name="photoFileName" id="photoFileName"></td></tr>
+            <tr><td colspan="4" style="text-align: center;">
+                    <button id="registerBtn">등록</button> &nbsp;
+                    <button type="reset">취소</button>  &nbsp;
+                    <button id="listBtn">목록</button>&nbsp;
+                </td></tr>
+        </table>
+    </div>
+
+</body>
+</html>

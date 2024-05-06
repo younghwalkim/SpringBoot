@@ -57,12 +57,17 @@
     </style>
     <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
-        $(function(){
+        $(function(currentPage){
+            var currentPage;
+            if (currentPage == "") {
+                currentPage = 1;
+            }
 
-            // 인기게시글 top3, board 테이블의 전체 목록 조회 출력
+            // board 테이블의 전체 목록 조회 출력
             $.ajax({
-                url: "/notices",
+                url: "/notices/list",
                 type: "GET",
+                data: { page:  currentPage, limit: 10 },
                 dataType: "json",
                 contentType:"application/json; charset=UTF-8",
                 success: function(data){
@@ -88,8 +93,7 @@
                             + "</tr>";
                     }
 
-                    $('#toplist').html($('#toplist').html() + values);
-                    //$('#toplist').append(values);
+                    $('#list').html($('#list').html() + values);
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -101,9 +105,6 @@
                 location.href="/boardwritepage";
             });
         });
-
-
-
     </script>
 </head>
 <body>
@@ -118,7 +119,7 @@
 <div style="float:left;border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
     <h4>공지사항</h4>
     <div style="padding-bottom: 20px;"><button id="insertForm">등록</button></div>
-    <table id="toplist">
+    <table id="list">
         <tr><th>번호</th>
             <th>제목</th>
             <th>작성자</th>
@@ -127,9 +128,12 @@
         </tr>
     </table>
     <br>
-    <div class="pagination">
-        <button class="pagination-btn prev-btn" disabled>Previous</button>
-        <button class="pagination-btn next-btn">Next</button>
+    <div id="pagearea" style="align:center;margin-left: 500px;">
+        <button id="1" class="page">처음</button>
+        <button id="prev" class="page">이전그룹</button>
+        <span class="page" id="1">1</span> &nbsp; <span class="page" id="2">2</span>
+        <button id="next" class="page">다음그룹</button>
+        <button id="2" class="page">마지막</button>
     </div>
 </div>
 

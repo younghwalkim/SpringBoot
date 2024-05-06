@@ -17,9 +17,11 @@ public class HomeController {
     }
 
     // Board 목록
-    @GetMapping("/boardpage")
-    public String moveBoardPage() {
-        return "/board/boardList";
+    @GetMapping("/boards")
+    public ModelAndView moveBoardPage(ModelAndView mv) {
+        log.info("# B-1. HomeController > boardlist() : ");
+        mv.setViewName("/board/boardList");
+        return mv;
     }
 
     // Board 등록
@@ -59,7 +61,7 @@ public class HomeController {
     // Notice 목록
     @GetMapping("/noticepage")
     public String moveNoticePage() {
-        return "/notice/noticeList";
+        return "/notice/noticeList?page=1&limit=10";
     }
 
     // Notice 상세
@@ -76,10 +78,31 @@ public class HomeController {
         return mv;
     }
 
-    // member 가입
-    @GetMapping("/memberpage")
-    public String moveMemberPage() {
-        return "/member/member";
+    // member list
+    @GetMapping("/mlistpage")
+    public String moveMemberListPage() {
+        return "/member/list";
     }
+
+    // member inserForm
+    @GetMapping("/mwritepage")
+    public String moveMemberWritePage() {
+        return "/member/writeForm";
+    }
+
+    // member view
+    @GetMapping("/mviewpage/{userid}")
+    public ModelAndView moveMemberViewPage(
+            @PathVariable("userid") String userid,
+            ModelAndView mv) {
+
+        log.info("### member view :" + userid);
+
+        mv.addObject("userId", userid);
+        mv.setViewName("/member/view");
+
+        return mv;
+    }
+
 
 }
