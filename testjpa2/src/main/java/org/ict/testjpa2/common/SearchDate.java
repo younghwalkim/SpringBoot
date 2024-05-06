@@ -14,5 +14,5 @@ import java.time.LocalDateTime;
 @Component
 public class SearchDate {
 	private Date begin;
-	private Date end;
+	private Date end;	
 }

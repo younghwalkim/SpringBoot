@@ -17,20 +17,20 @@ import java.util.*;
 @Table(name="NOTICE")    // 매핑할 테이블 이름 지정함, board 테이블을 자동으로 만들어주기도 함.
 public class NoticeEntity {
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="NOTICENO")
     private int noticeNo;
 
-    @Column(name="NOTICETITLE")
+    @Column(name="NOTICETITLE", nullable = false, length = 50)
     private String noticeTitle;
 
-    @Column(name="NOTICEDATE")
+    @Column(name="NOTICEDATE", nullable = false)
     private Date noticeDate;
 
-    @Column(name="NOTICEWRITER")
+    @Column(name="NOTICEWRITER", nullable = false, length = 50)
     private String noticeWriter;
 
-    @Column(name="NOTICECONTENT")
+    @Column(name="NOTICECONTENT", nullable = false, length = 2000)
     private String noticeContent;
 
     @Column(name="ORIGINAL_FILEPATH")
@@ -39,47 +39,44 @@ public class NoticeEntity {
     @Column(name="RENAME_FILEPATH")
     private String renameFilePath;
 
-    @Column(name="IMPORTANCE")
+    @Column(name="IMPORTANCE", nullable = false, columnDefinition = "N")
     private String importance;
 
     @Column(name="IMP_END_DATE")
     private Date impEndDate;
 
-    @Column(name="READCOUNT")
+    @Column(name="READCOUNT", nullable = false, columnDefinition = "1")
     private int readCount;
 
     @PrePersist   //jpa 로 가기 전에 작동됨
     public void prePersist(){
-        //boardDate 에 현재 날짜 적용
-        GregorianCalendar calendar = new GregorianCalendar();
-        this.noticeDate = calendar.getTime();
-        this.impEndDate = calendar.getTime();
+        noticeDate = new Date(System.currentTimeMillis());
     }
 
     // entity --> dto 로 변환하는 메소드 추가함
     public NoticeDto toDto(){
         return NoticeDto.builder()
-                .noticeNo(this.noticeNo)
-                .noticeTitle(this.noticeTitle)
-                .noticeDate(this.noticeDate)
-                .noticeWriter(this.noticeWriter)
-                .noticeContent(this.noticeContent)
-                .originalFilePath(this.originalFilePath)
-                .renameFilePath(this.renameFilePath)
-                .importance(this.importance)
-                .impEndDate(this.impEndDate)
-                .readCount(this.readCount)
+                .noticeNo(noticeNo)
+                .noticeTitle(noticeTitle)
+                .noticeDate(noticeDate)
+                .noticeWriter(noticeWriter)
+                .noticeContent(noticeContent)
+                .originalFilePath(originalFilePath)
+                .renameFilePath(renameFilePath)
+                .importance(importance)
+                .impEndDate(impEndDate)
+                .readCount(readCount)
                 .build();
     }
 
-    /*
+
     // entity --> dto 로 변환하는 메소드 추가함
     public NoticeDto toDtoTop3(){
         return NoticeDto.builder()
-                .noticeNo(this.noticeNo)
-                .noticeTitle(this.noticeTitle)
-                .noticeDate(this.noticeDate)
+                .noticeNo(noticeNo)
+                .noticeTitle(noticeTitle)
+                .noticeDate(noticeDate)
                 .build();
     }
-    */
+
 }

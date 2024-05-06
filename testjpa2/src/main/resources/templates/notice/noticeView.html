@@ -43,7 +43,7 @@
         $(document).ready(function(){
             // 조회 ajax 전송
             $.ajax({
-                url: "/boards/" + $("div#bno").text(),
+                url: "/notices/" + $("div#no").text(),
                 type: "GET",
                 dataType: "json",
                 contentType:"application/json; charset=UTF-8",
@@ -58,11 +58,11 @@
                     var json = JSON.parse(str);
                     console.log("3. parse : " + json);
 
-                    $('div#btitle').text(json.boardTitle);
-                    $('div#bwriter').text(json.boardWriter);
-                    $('div#bcontent').text(json.boardContent);
-                    $('div#bdate').text(json.boardDate);
-                    $('div#breadcount').text(json.boardReadCount);
+                    $('div#title').text(json.noticeTitle);
+                    $('div#writer').text(json.noticeWriter);
+                    $('div#content').text(json.noticeContent);
+                    $('div#date').text(json.noticeDate);
+                    $('div#readcount').text(json.readCount);
 
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -74,7 +74,7 @@
             $('#deleteBtn').on('click', function (){
                 // ajax 전송
                 $.ajax({
-                    url: "/boards/" + $("div#bno").text(),
+                    url: "/boards/" + $("div#no").text(),
                     type: "DELETE",
                     dataType: "json",
                     contentType:"application/json; charset=UTF-8",
@@ -90,7 +90,7 @@
 
             // 수정 버튼 클릭시
             $('#modifyBtn').on('click', function (){
-                location.href="/boardmodifypage/"+ $("div#bno").text();
+                location.href="/boardmodifypage/"+ $("div#no").text();
             });
 
             // 목록 버튼 클릭시
@@ -113,17 +113,17 @@
         <h4>게시글 조회</h4>
         <table>
             <tr><th>번호</th>
-                <td style='text-align:left;'><div id="bno" th:text="${ bno }"></div></td></tr>
+                <td style='text-align:left;'><div id="no" th:text="${ no }"></div></td></tr>
             <tr><th>제목</th>
-                <td style='text-align:left;'><div id="btitle"></div></td></tr>
+                <td style='text-align:left;'><div id="title"></div></td></tr>
             <tr><th>작성자</th>
-                <td style='text-align:left;'><div id="bwriter"></div></td></tr>
+                <td style='text-align:left;'><div id="writer"></div></td></tr>
             <tr><th>등록일</th>
-                <td style='text-align:left;'><div id="bdate"></div></td></tr>
+                <td style='text-align:left;'><div id="date"></div></td></tr>
             <tr><th>조회수</th>
-                <td style='text-align:left;'><div id="breadcount"></div></td></tr>
+                <td style='text-align:left;'><div id="readcount"></div></td></tr>
             <tr><th>내용</th>
-                <td style='text-align:left;'><div id="bcontent"></div></td></tr>
+                <td style='text-align:left;'><div id="content"></div></td></tr>
             <tr><td colspan="4" style="text-align: center;">
                     <button id="modifyBtn">수정</button> &nbsp;
                     <button id="deleteBtn">삭제</button> &nbsp;

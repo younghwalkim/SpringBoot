@@ -25,26 +25,31 @@ public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
 
-    // 조회 Top 3
+    // Top3
     @GetMapping("/btop3")
     public ResponseEntity<List<BoardDto>> selectTop3(){
-        log.info("### /boards/btop3 => selectTop3() ");
 
-        // 3개 리턴
+        log.info("# BoardController > board selectTop3() ");
+
+        /* 목록값 리턴 */
         return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
     }
 
     // 목록
     @GetMapping("/list")
     public ResponseEntity<List<BoardDto>> selectList(
-            @RequestParam(name="page") int page,
-            @RequestParam(name="limit") int limit){
-        log.info("### /boards/list : " + page + ", " + limit);
+            @RequestParam(name="keyword", required=false) String keyword,
+            @RequestParam(name="page", required=false, defaultValue="1") int page,
+            @RequestParam(name="limit", required=false, defaultValue="10") int limit){
 
-        //JPA 가 제공하는 Pageable 객체를 사용함
+        log.info("# B-2. BoardController > selectList() : " + keyword + ", " + page + ", " + limit);
+
+        // JPA 가 제공하는 Pageable 객체를 사용함
         Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
 
-        /* 목록값 리턴 */
+        // 목록 조회  => 응답 처리
+      
+
         return new ResponseEntity<>(boardService.selectList(pageable), HttpStatus.OK);
     }
 
@@ -95,5 +100,40 @@ public class BoardController {
         boardService.deleteBoard(boardnum);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
+
+
+    @GetMapping("/title")
+    public ResponseEntity<List<BoardDto>> selectSearchTitle(
+            @RequestParam(name="keyword") String keyword,  @RequestParam(name="page") int page,
+            @RequestParam(name="limit") int limit){
+        log.info("/boards/title : " + keyword + ", " + page + ", " + limit);
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+        //페이지에 출력할 목록 조회해 옴    => 응답 처리
+        return new ResponseEntity<>(boardService.selectSearchTitle(keyword, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("/writer")
+    public ResponseEntity<List<BoardDto>> selectSearchWriter(
+            @RequestParam(name="keyword") String keyword,  @RequestParam(name="page") int page,
+            @RequestParam(name="limit") int limit){
+        log.info("/boards/list : " + page + ", " + limit);
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+        //페이지에 출력할 목록 조회해 옴    => 응답 처리
+        return new ResponseEntity<>(boardService.selectSearchWriter(keyword, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<List<BoardDto>> selectSearchDate(
+            @RequestParam(name="begin") java.sql.Date begin, @RequestParam(name="end") java.sql.Date end,
+            @RequestParam(name="page") int page, @RequestParam(name="limit") int limit){
+        log.info("/boards/list : " + page + ", " + limit);
+        //JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+        //페이지에 출력할 목록 조회해 옴    => 응답 처리
+        return new ResponseEntity<>(boardService.selectSearchDate(begin, end, pageable), HttpStatus.OK);
+    }
+
 
 }

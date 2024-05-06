@@ -37,16 +37,16 @@ public class NoticeDto {
     // dto--> entity 로 변환하는 메소드 추가함
     public NoticeEntity toEntity(){
         return NoticeEntity.builder()
-                .noticeNo(this.noticeNo)
-                .noticeTitle(this.noticeTitle)
-                .noticeDate(this.noticeDate)
-                .noticeWriter(this.noticeWriter)
-                .noticeContent(this.noticeContent)
-                .originalFilePath(this.originalFilePath)
-                .renameFilePath(this.renameFilePath)
-                .importance(this.importance)
-                .impEndDate(this.impEndDate)
-                .readCount(this.readCount)
+                .noticeNo(noticeNo)
+                .noticeTitle(noticeTitle)
+                .noticeDate(noticeDate)
+                .noticeWriter(noticeWriter)
+                .noticeContent(noticeContent)
+                .originalFilePath(originalFilePath)
+                .renameFilePath(renameFilePath)
+                .importance(importance)
+                .impEndDate(impEndDate)
+                .readCount(readCount)
                 .build();
     }
 
