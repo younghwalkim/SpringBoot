@@ -13,6 +13,7 @@ import java.util.*;
 
 @Repository
 public interface NoticeRepository extends JpaRepository<NoticeEntity, Integer> {
+    // jpa 가 제공하는 기본메서드를 사용하려면 필요함.
     /* 방법 1. JPQL을 이용한 Repository */
 
     /* 방법 2. @Query + NativeQuery 사용 (테이블명과 컬럼명을 사용) */
@@ -21,6 +22,6 @@ public interface NoticeRepository extends JpaRepository<NoticeEntity, Integer> {
     // Top 3 출력용
     @Query(value = " select NOTICENO, NOTICETITLE, NOTICEDATE "
             + " from NOTICE order by NOTICEDATE desc ", nativeQuery=true)
-    List<NoticeNativeVo> findTop3();
+    List<zzz_NoticeNativeVo> findTop3();
 
 }

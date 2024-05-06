@@ -25,13 +25,30 @@ public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
 
-    // 목록
-    @GetMapping()
-    public ResponseEntity<List<BoardDto>> selectList(){
-        log.info("### board selectList()");
+    // Top3
+    @GetMapping("/btop3")
+    public ResponseEntity<List<BoardDto>> selectTop3(){
+
+        log.info("# BoardController > board selectTop3() ");
 
         /* 목록값 리턴 */
-        return new ResponseEntity<>(boardService.selectList(), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
+    }
+
+    // 목록
+    @GetMapping("/list")
+    public ResponseEntity<List<BoardDto>> selectList(
+            @RequestParam(name="keyword", required=false) String keyword,
+            @RequestParam(name="page", required=false, defaultValue="1") int page,
+            @RequestParam(name="limit", required=false, defaultValue="10") int limit){
+
+        log.info("# B-2. BoardController > selectList() : " + keyword + ", " + page + ", " + limit);
+
+        // JPA 가 제공하는 Pageable 객체를 사용함
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
+
+        // 목록 조회  => 응답 처리
+        return new ResponseEntity<>(boardService.selectList(pageable), HttpStatus.OK);
     }
 
     // 상세조회
@@ -82,14 +99,7 @@ public class BoardController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    // Top 3
-    @GetMapping("/btop3")
-    public ResponseEntity<List<BoardDto>> selectTop3(){
-        log.info("### board selectTop3()");
 
-        /* 목록값 리턴 */
-        return new ResponseEntity<>(boardService.selectTop3(), HttpStatus.OK);
-    }
 
     @GetMapping("/title")
     public ResponseEntity<List<BoardDto>> selectSearchTitle(

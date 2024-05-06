@@ -21,7 +21,6 @@ public class BoardService {
     // Serivce 에 대한 interface  만들어서  상속받은 ServiceImpl 클래스를 만드는 구조로 작성해도 됨.
 
     private final BoardRepository boardRepository;
-    private final BoardDto boardDto;
 
     // Top3 목록
     public ArrayList<BoardDto> selectTop3(){
@@ -44,15 +43,16 @@ public class BoardService {
     }
     
     // 목록
-    public ArrayList<BoardDto> selectList(){
-        List<BoardEntity> entityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"boardNum"));
+    public ArrayList<BoardDto> selectList(Pageable pageable){
+
+        log.info("# B-3. BoardSerivce > selectList() : " + pageable);
+
+        Page<BoardEntity> pages = boardRepository.findAll(pageable);
         ArrayList<BoardDto> list = new ArrayList<>();
 
-        for(int i = 0; i < entityList.size(); i++){
-            BoardEntity entity = entityList.get(i);
-            BoardDto dto = entity.toDto();
-
-            list.add(dto);
+        for(BoardEntity entity : pages){
+            BoardDto boardDto = entity.toDto();
+            list.add(boardDto);
         }
 
         return list;
