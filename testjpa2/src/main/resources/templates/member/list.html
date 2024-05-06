@@ -1,0 +1,398 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>member</title>
+    <style>
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width:1000px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* 버튼 기본 스타일 */
+        .pagination-btn {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 버튼 호버 효과 */
+        .pagination-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* 버튼 비활성화 스타일 */
+        .pagination-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* 다음 버튼 스타일 */
+        .next-btn {
+            float: right;
+        }
+
+        /* 이전 버튼 스타일 */
+        .prev-btn {
+            float: left;
+        }
+
+        /* 검색영역 */
+        searcharea{
+            width: 600px;
+        }
+        fieldset#ss {
+            width: 600px;
+            position: relative;
+            /*left: 450px;*/
+        }
+        div fieldset {
+            width: 600px;
+        }
+        div.sfield {
+            background: lightgray;
+            width: 600px;
+            position: relative;
+            /*left: 400px;*/
+            display: none;  /* 안 보이게 함 */
+        }
+    </style>
+
+    <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // member 테이블의 전체 목록 조회 출력
+            $.ajax({
+                url: "/members/list",
+                type: "GET",
+                data: { page:  1, limit: 10 },
+                dataType: "json",
+                success: function(data){
+                    console.log("1. success : " + data);
+
+                    //object --> string
+                    var str = JSON.stringify(data);
+                    console.log("2. stringify : " + str);
+
+                    //string --> json
+                    var json = JSON.parse(str);
+                    console.log("3. parse : " + json);
+
+                    values = "";
+                    for(var i in json){
+                        values += "<tr>"
+                            + "<td>" + json[i].userId + "</td>"
+                            + "<td><a href='/mviewpage/" + json[i].userId + "'>"+ json[i].userName
+                            // 첨부파일 여부 있으면
+                        if (json[i].photoFileName != null && json[i].photoFileName.length > 0) {
+                            values += "<img src='/images/file_clip.png' width='15' height='15'>"
+                        }
+                        values += "</a></td>"
+                            + "<td>" + json[i].gender + "</td>"
+                            + "<td>" + json[i].age + "</td>"
+                            + "<td>" + json[i].enrollDate + "</td>"
+                            + "<td>" + json[i].lastModified + "</td>"
+                            + "<td>" + json[i].signType + "</td>"
+                            + "<td>" + json[i].adminYN + "</td>"
+                            + "<td>" + json[i].loginOk + "</td>"
+                            + "</tr>";
+                    }
+
+                    $('#pagelist').html($('#pagelist').html() + values);
+
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+                }
+            });  //ajax
+
+            // 검색영역 : input 태그의 name 이 item 의 값이 바뀌면(change) 작동되는 이벤트 핸들러 작성
+            $('input[name=item]').on('change', function(){
+                //여러 개의 태그 중에서 체크표시가 된 태그를 선택
+                $('input[name=item]').each(function(index){
+                    //선택된 radio 순번대로 하나씩 checked 인지 확인함
+                    if($(this).is(':checked')){
+                        //체크 표시된 아이템에 대한 폼이 보여지게 처리함
+                        $('div.sfield').eq(index).css('display', 'block');
+                    }else{
+                        //체크 표시 안된 아이템의 폼은 안 보이게 처리함
+                        $('div.sfield').eq(index).css('display', 'none');
+                    }
+                });  //each
+            });  //on
+
+            // 등록 버튼 클릭시
+            $('#insertForm').on('click', function (){
+                location.href="/mwritepage";
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+<div style="border: 1px solid #00b7ff; padding:10px;">
+    <th:block th:replace="~{header}"></th:block>
+</div>
+
+<hr>
+<h1>Member : jpa 3번째 방법 적용</h1>
+<hr>
+
+<div style="float:left;border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+    <h4>회원목록</h4>
+
+    <div id="searcharea" style="align:center">
+        <!-- 항목별 검색 기능 추가 -->
+        <fieldset id="ss">
+            <legend>검색할 항목을 선택하세요.</legend>
+            <input type="radio" name="item" id="userid"> 아이디 &nbsp;
+            <input type="radio" name="item" id="gender"> 성별 &nbsp;
+            <input type="radio" name="item" id="age"> 나이 &nbsp;
+            <input type="radio" name="item" id="enrolldate"> 가입날짜 &nbsp;
+            <input type="radio" name="item" id="loginok"> 로그인허용여부 &nbsp;
+        </fieldset>
+        <br>
+        <!-- 검색 항목별 값 입력 전송용 양식 만들기 -->
+        <!-- 아이디 검색  -->
+        <div id="useriddiv" class="sfield">
+            <fieldset>
+                <legend>검색할 아이디을 입력하세요.</legend>
+                <input type="search" id="ukeyword"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchUserid(1);">
+            </fieldset>
+        </div>
+
+        <!-- 성별 검색  -->
+        <div id="genderdiv" class="sfield">
+            <fieldset>
+                <legend>검색할 성별을 선택하세요.</legend>
+                <input type="search" id="gkeyword"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchWriter(1);">
+            </fieldset>
+        </div>
+
+        <!-- 나이 검색  -->
+        <div id="contentdiv" class="sfield">
+            <fieldset>
+                <legend>검색할 나이을 선택하세요.</legend>
+                <input type="search" id="wkeyword"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchWriter(1);">
+            </fieldset>
+        </div>
+
+        <!-- 가입날짜 검색 폼 -->
+        <div id="datediv" class="sfield">
+            <fieldset>
+                <legend>검색할 가입날짜를 선택하세요.</legend>
+                <input type="date" id="begin"> ~ <input type="date" id="end"> &nbsp;
+                <input type="button" value="검색" onclick="fn_searchDate(1);">
+            </fieldset>
+        </div>
+    </div>
+
+
+    <div style="padding-bottom: 20px;"><button id="insertForm">등록</button></div>
+    <table id="pagelist">
+        <tr><th>userId</th>
+            <th>userName</th>
+            <th>gender</th>
+            <th>age</th>
+            <th>enrollDate</th>
+            <th>lastModified</th>
+            <th>signType</th>
+            <th>adminYN</th>
+            <th>loginOk</th>
+        </tr>
+    </table>
+    <br>
+    <div class="pagination">
+        <button class="pagination-btn prev-btn" disabled>Previous</button>
+        <button class="pagination-btn next-btn">Next</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    <!--  아이디 검색   -->
+    function fn_searchUserid(page){
+        $.ajax({
+            url: "/members/userid",
+            type: 'GET',
+            data: {
+                keyword : $('#ukeyword').val(),
+                page : page,
+                limit : 10
+            },
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                console.log("success : " + data);   // [Object, object]
+
+                //object --> string
+                var str = JSON.stringify(data);
+                console.log(str)
+
+                //string --> json
+                var json = JSON.parse(str);
+                console.log(json)
+
+                values = "<tr><th>userId</th>\n" +
+                    "            <th>userName</th>\n" +
+                    "            <th>gender</th>\n" +
+                    "            <th>age</th>\n" +
+                    "            <th>enrollDate</th>\n" +
+                    "            <th>lastModified</th>\n" +
+                    "            <th>signType</th>\n" +
+                    "            <th>adminYN</th>\n" +
+                    "            <th>loginOk</th>";
+                for(var i in json) {
+                    values += "<tr>"
+                        + "<td>" + json[i].userId + "</td>"
+                        + "<td><a href='/mviewpage/" + json[i].userId + "'>"+ json[i].userName
+                    // 첨부파일 여부 있으면
+                    if (json[i].photoFileName != null && json[i].photoFileName.length > 0) {
+                        values += "<img src='/images/file_clip.png' width='15' height='15'>"
+                    }
+                    values += "</a></td>"
+                        + "<td>" + json[i].gender + "</td>"
+                        + "<td>" + json[i].age + "</td>"
+                        + "<td>" + json[i].enrollDate + "</td>"
+                        + "<td>" + json[i].lastModified + "</td>"
+                        + "<td>" + json[i].signType + "</td>"
+                        + "<td>" + json[i].adminYN + "</td>"
+                        + "<td>" + json[i].loginOk + "</td>"
+                        + "</tr>";
+                }  //for
+
+                // $('#pagelist').html($('#pagelist').html() + values);
+                $('#pagelist').html(values);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+            }
+        });
+    }
+
+    function fn_searchWriter(page){
+        $.ajax({
+            url: '/notices/content',
+            type: 'GET',
+            data: {
+                keyword : $('#wkeyword').val(),
+                page : page,
+                limit : 10
+            },
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                console.log("success : " + data);   // [Object, object]
+
+                //object --> string
+                var str = JSON.stringify(data);
+                console.log(str)
+
+                //string --> json
+                var json = JSON.parse(str);
+                console.log(json)
+
+                values = "<tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>조회수</th></tr>";
+                for(var i in json) {
+                    if (json[i].boardOriginalFileName != null && json[i].boardOriginalFileName.length > 0) {
+                        values += "<tr><td>" + json[i].boardNum
+                            + "</td><td><a href='#'  onclick='fn_detail(" + json[i].noticeNo + ");' >"
+                            + json[i].noticeTitle
+                            +  "<img src='/images/file_clip.png' width='15' height='15'></a></td><td>"
+                            + json[i].noticeWriter + "</td><td>"
+                            + json[i].noticeDate + "</td><td>"
+                            + json[i].readCount + "</td></tr>";
+                    }else{
+                        values += "<tr><td>" + json[i].boardNum
+                            + "</td><td><a href='#'  onclick='fn_detail(" + json[i].noticeNo + ");' >"
+                            + json[i].noticeTitle
+                            +  "</a></td><td>"
+                            + json[i].noticeWriter + "</td><td>"
+                            + json[i].noticeDate + "</td><td>"
+                            + json[i].readCount + "</td></tr>";
+                    }
+                }  //for
+
+                $('#pagelist').html(values);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+            }
+        });
+    }
+
+    function fn_searchDate(page){
+        $.ajax({
+            url:  '/boards/date',
+            type: 'GET',
+            data: {
+                begin : $('#begin').val(),
+                end : $('#end').val(),
+                page : page,
+                limit : 10},
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                console.log("success : " + data);   // [Object, object]
+
+                //object --> string
+                var str = JSON.stringify(data);
+                console.log(str)
+
+                //string --> json
+                var json = JSON.parse(str);
+                console.log(json)
+
+                values = "<tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>조회수</th></tr>";
+                for(var i in json) {
+                    if (json[i].boardOriginalFileName != null && json[i].boardOriginalFileName.length > 0) {
+                        values += "<tr><td>" + json[i].noticeNo
+                            + "</td><td><a href='#'  onclick='fn_detail(" + json[i].noticeNo + ");' >"
+                            + json[i].noticeTitle
+                            +  "<img src='/images/file_clip.png' width='15' height='15'></a></td><td>"
+                            + json[i].noticeWriter + "</td><td>"
+                            + json[i].noticeDate + "</td><td>"
+                            + json[i].readCount + "</td></tr>";
+                    }else{
+                        values += "<tr><td>" + json[i].noticeNo
+                            + "</td><td><a href='#'  onclick='fn_detail(" + json[i].noticeNo + ");' >"
+                            + json[i].noticeTitle
+                            +  "</a></td><td>"
+                            + json[i].noticeWriter + "</td><td>"
+                            + json[i].noticeDate + "</td><td>"
+                            + json[i].readCount + "</td></tr>";
+                    }
+                }  //for
+
+                $('#pagelist').html(values);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+            }
+        });
+    }
+</script>
+
+
+</body>
+</html>

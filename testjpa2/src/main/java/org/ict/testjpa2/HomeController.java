@@ -76,10 +76,31 @@ public class HomeController {
         return mv;
     }
 
-    // member 가입
-    @GetMapping("/memberpage")
-    public String moveMemberPage() {
-        return "/member/member";
+    // member list
+    @GetMapping("/mlistpage")
+    public String moveMemberListPage() {
+        return "/member/list";
     }
+
+    // member inserForm
+    @GetMapping("/mwritepage")
+    public String moveMemberWritePage() {
+        return "/member/writeForm";
+    }
+
+    // member view
+    @GetMapping("/mviewpage/{userid}")
+    public ModelAndView moveMemberViewPage(
+            @PathVariable("userid") String userid,
+            ModelAndView mv) {
+
+        log.info("### member view :" + userid);
+
+        mv.addObject("userId", userid);
+        mv.setViewName("/member/view");
+
+        return mv;
+    }
+
 
 }
