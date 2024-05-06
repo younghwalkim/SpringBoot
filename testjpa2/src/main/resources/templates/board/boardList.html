@@ -82,11 +82,20 @@
 
             alert(currentPage)
 
+
+            var currentPage;
+            if (currentPage == null) {
+                currentPage = 1;
+            }
+            // alert(currentPage);
+
             // board 테이블의 전체 목록 조회 출력
             $.ajax({
                 url: "/boards/list",
                 type: "GET",
-                data: { page:  currentPage, limit: 10 },
+
+                data: { page: currentPage, limit: 10 },
+
                 dataType: "json",
                 contentType:"application/json; charset=UTF-8",
                 success: function(data){
@@ -113,6 +122,9 @@
                     }
 
                     $('#boardlist').html($('#boardlist').html() + values);
+                    /* ('#list').html($('#list').html() + values); */
+
+
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -157,7 +169,29 @@
 <!--
     <div style="align:center;margin-left: 500px;">
         <button onclick="fn_list(1);" >목록보기</button>
-    </div>
+
+    <hr>
+    <div style="float:left;border:0px solid navy;padding:5px;margin:5px;margin-left:50px;">
+        <h4>게시글</h4>
+        <div style="padding-bottom: 20px;"><button id="insertForm">등록</button></div>
+        <table id="list">
+            <tr><th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+            </tr>
+        </table>
+        <br>
+        <div id="pagearea" style="align:left;margin-left: 600px;">
+            <button id="1" class="page">처음</button>
+            <button id="prev" class="page">이전그룹</button>
+                <span class="page" id="1"><a href='?page=1&limit=10'>1</a></span> &nbsp;
+                <span class="page" id="2"><a href='?page=2&limit=10'>2</a></span>
+            <button id="next" class="page">다음그룹</button>
+            <button id="2" class="page">마지막</button>
+
+        </div>
 -->
 
     <div id="searcharea">

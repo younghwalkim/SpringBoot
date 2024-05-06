@@ -48,6 +48,8 @@ public class BoardController {
         Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(Sort.Direction.DESC, "boardNum"));
 
         // 목록 조회  => 응답 처리
+      
+
         return new ResponseEntity<>(boardService.selectList(pageable), HttpStatus.OK);
     }
 
@@ -100,7 +102,6 @@ public class BoardController {
     }
 
 
-
     @GetMapping("/title")
     public ResponseEntity<List<BoardDto>> selectSearchTitle(
             @RequestParam(name="keyword") String keyword,  @RequestParam(name="page") int page,
@@ -133,5 +134,6 @@ public class BoardController {
         //페이지에 출력할 목록 조회해 옴    => 응답 처리
         return new ResponseEntity<>(boardService.selectSearchDate(begin, end, pageable), HttpStatus.OK);
     }
+
 
 }

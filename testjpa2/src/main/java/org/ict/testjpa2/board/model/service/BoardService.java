@@ -42,10 +42,15 @@ public class BoardService {
         return list;
     }
     
-    // 목록
+
+    /* 목록
     public ArrayList<BoardDto> selectList(Pageable pageable){
 
         log.info("# B-3. BoardSerivce > selectList() : " + pageable);
+  
+        st<BoardEntity> entityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"boardNum"));
+        ArrayList<BoardDto> list = new ArrayList<>();
+
 
         Page<BoardEntity> pages = boardRepository.findAll(pageable);
         ArrayList<BoardDto> list = new ArrayList<>();
@@ -55,6 +60,20 @@ public class BoardService {
             list.add(boardDto);
         }
 
+        return list;
+    }
+    */
+
+    // 목록 - paging
+    public ArrayList<BoardDto> selectList(Pageable pageable){
+        Page<BoardEntity> pages = boardRepository.findAll(pageable);
+        ArrayList<BoardDto> list = new ArrayList<>();
+
+        for(BoardEntity entity : pages){
+            BoardDto boardDto = entity.toDto();
+            list.add(boardDto);
+        }
+        
         return list;
     }
 

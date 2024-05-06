@@ -1,6 +1,7 @@
 package org.ict.testjpa2.common;
 
 public class Paging implements java.io.Serializable {
+
 	private static final long serialVersionUID = -8649527407666546438L;
 
 	private int startRow;    //페이지에 출력할 시작행
@@ -38,16 +39,20 @@ public class Paging implements java.io.Serializable {
 		this.endPage = startPage + limit - 1;
 		
 		//마지막 그룹의 끝값은 마지막 페이지와 맞춤
+
 		if(maxPage < endPage) {
 			endPage = maxPage;
 		}
 		
+
 		//요청한 페이지의 출력될 목록의 행번호를 계산
 		//한 페이지에 출력할 목록 갯수가 10개인 경우, 현재 페이지가 3페이지가 요청되었다면
 		//행은 21행부터 30행이 됨
+
 		this.startRow = (currentPage - 1) * limit + 1;
 		this.endRow = startRow + limit - 1;
 	}
+
 
 	//setter and getter
 	public int getStartRow() {
@@ -65,6 +70,7 @@ public class Paging implements java.io.Serializable {
 	public void setEndRow(int endRow) {
 		this.endRow = endRow;
 	}
+
 
 	public int getListCount() {
 		return listCount;
@@ -114,6 +120,10 @@ public class Paging implements java.io.Serializable {
 		this.endPage = endPage;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String getUrlMapping() {
 		return urlMapping;
 	}
@@ -127,11 +137,13 @@ public class Paging implements java.io.Serializable {
 	}
 
 	//toString overriding
+
 	@Override
 	public String toString() {
 		return "Paging [startRow=" + startRow + ", endRow=" + endRow + ", listCount=" + listCount + ", limit=" + limit
 				+ ", currentPage=" + currentPage + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
 				+ endPage + ", urlMapping=" + urlMapping + "]";
+
 	}	
 	
 }
