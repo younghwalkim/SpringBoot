@@ -1,14 +1,14 @@
 ### demo
-* thymeleaf
-* 반응형 뷰 Style 적용
+* thymeleaf, 반응형 뷰 Style 적용
 
 ### test_jsp
-* board 및 board top3 구현
+* board 및 board top3 
 * 1:1 chat 
 * member 
 
 ### testjpa
-
+* board 및 board top3 
+  
 ### testjpa2
 
 ### testJWT
