@@ -120,9 +120,9 @@ public class Paging implements java.io.Serializable {
 		this.endPage = endPage;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+//	public static long getSerialversionuid() {
+//		return serialVersionUID;
+//	}
 
 	public String getUrlMapping() {
 		return urlMapping;
